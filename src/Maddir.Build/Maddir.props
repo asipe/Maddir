@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootDir>$(MSBuildStartupDirectory)</RootDir>
+    <SrcDir>$(Rootdir)\src</SrcDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ProjectGuid>{622788D9-01F8-4659-AA7E-E87A807E2B1D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <FileAlignment>512</FileAlignment>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(FrameworkVersion)' == 'v3.5'">
+    <TargetFrameworkVersionName>net-3.5</TargetFrameworkVersionName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <DefineConstants>DEBUG;TRACE;NET35</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(FrameworkVersion)' == 'v4.0'">
+    <TargetFrameworkVersionName>net-4.0</TargetFrameworkVersionName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <DefineConstants>DEBUG;TRACE;NET40</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(FrameworkVersion)' == 'v4.5'">
+    <TargetFrameworkVersionName>net-4.5</TargetFrameworkVersionName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <DefineConstants>DEBUG;TRACE;NET45</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DebugDir>$(Rootdir)\debug\$(TargetFrameworkVersionName)</DebugDir>
+    <PackagesDir>$(Rootdir)\thirdparty\packages\$(TargetFrameworkVersionName)</PackagesDir>
+    <OutputPath>$(DebugDir)\$(AssemblyName)</OutputPath>
+    <BaseIntermediaryOutputPath>$(TargetFrameworkVersionName)\obj</BaseIntermediaryOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediaryOutputPath)</IntermediateOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Binaries Include="$(TargetFrameworkVersionName)"></Binaries>
+  </ItemGroup>
+</Project>

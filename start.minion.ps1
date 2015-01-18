@@ -1,0 +1,1 @@
+scriptcs .\src\Maddir.Minion\minion.csx
