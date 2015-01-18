@@ -53,7 +53,12 @@
     <Compile Include="Tests\BaseTestCase.cs" />
     <Compile Include="Tests\TestUsage.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Maddir.Core\Maddir.Core.csproj">
+      <Project>{05b2fb7f-a120-43ff-80b4-0568506cdca4}</Project>
+      <Name>Maddir.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
