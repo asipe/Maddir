@@ -33,6 +33,9 @@
     <Reference Include="nunit.framework">
       <HintPath>..\..\thirdparty\packages\net-4.5\NUnit\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="supacharge.core">
+      <HintPath>..\..\thirdparty\packages\net-4.5\SupaCharge.Core\lib\net45\supacharge.core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,9 +44,15 @@
     <Compile Include="..\Maddir.Properties\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="SampleTest.cs" />
+    <Compile Include="GlobalSetup.cs" />
+    <Compile Include="Infrastructure\MaddirHelper.cs" />
+    <Compile Include="Infrastructure\DevelopmentRoot.cs" />
+    <Compile Include="Infrastructure\PathInfo.cs" />
+    <Compile Include="Infrastructure\TestEnvironment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\SampleTest.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

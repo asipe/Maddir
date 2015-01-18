@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Maddir.IntegrationTests {
+namespace Maddir.IntegrationTests.Tests {
   [TestFixture]
   public class SampleTest {
     [Test]
