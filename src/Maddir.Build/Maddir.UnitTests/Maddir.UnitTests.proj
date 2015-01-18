@@ -17,6 +17,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="$(DebugDir)\Maddir.Core\Maddir.Core.dll" />
     <Reference Include="$(PackagesDir)\nunit\lib\nunit.framework.dll" />  
+    <Reference Include="$(PackagesDir)\AutoFixture\lib\net40\Ploeh.AutoFixture.dll" />  
+    <Reference Include="$(PackagesDir)\CompareNETObjects\lib\net451\KellermanSoftware.Compare-NET-Objects.dll" />  
+    <Reference Include="$(PackagesDir)\moq\lib\net40\moq.dll" />  
   </ItemGroup>    
 
   <ItemGroup>

@@ -35,7 +35,7 @@ void Echo(string message) {
 
 void Bootstrap() {
   Run(config["NugetExePath"], @"install .\src\Maddir.Nuget.Packages\common\packages.config -OutputDirectory .\thirdparty\packages\common -ExcludeVersion");
-  Run(config["NugetExePath"], @"install .\src\Maddir.Nuget.Packages\net-4.5\packages.config -OutputDirectory .\thirdparty\packages\net-4.5 -ExcludeVersion");
+  Run(config["NugetExePath"], @"install .\src\Maddir.Nuget.Packages\net-4.5.1\packages.config -OutputDirectory .\thirdparty\packages\net-4.5.1 -ExcludeVersion");
 }
 
 void Run(string exePath, string args) {
@@ -66,19 +66,19 @@ void RunTests(string name, string assembly, string framework) {
 }
 
 void RunUnitTestsVS() {
-  RunTests("VS Unit", @".\src\Maddir.UnitTests\bin\debug\Maddir.UnitTests.dll", "net-4.5");
+  RunTests("VS Unit", @".\src\Maddir.UnitTests\bin\debug\Maddir.UnitTests.dll", "net-4.5.1");
 }
 
 void RunIntegrationTestsVS() {
-  RunTests("VS Integration", @".\src\Maddir.IntegrationTests\bin\debug\Maddir.IntegrationTests.dll", "net-4.5");
+  RunTests("VS Integration", @".\src\Maddir.IntegrationTests\bin\debug\Maddir.IntegrationTests.dll", "net-4.5.1");
 }
 
 void RunUnitTestsDebug() {
-  RunTests("Debug Unit", Path.Combine(config["DebugDir"], @"net-4.5\Maddir.UnitTests\Maddir.UnitTests.dll"), "net-4.5");
+  RunTests("Debug Unit", Path.Combine(config["DebugDir"], @"net-4.5.1\Maddir.UnitTests\Maddir.UnitTests.dll"), "net-4.5.1");
 }
 
 void RunIntegrationTestsDebug() {
-  RunTests("Debug Integration", Path.Combine(config["DebugDir"], @"net-4.5\Maddir.IntegrationTests\Maddir.IntegrationTests.dll"), "net-4.5");
+  RunTests("Debug Integration", Path.Combine(config["DebugDir"], @"net-4.5.1\Maddir.IntegrationTests\Maddir.IntegrationTests.dll"), "net-4.5.1");
 }
 
 void RunAllTests() {
