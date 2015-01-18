@@ -50,7 +50,8 @@
     <Compile Include="Infrastructure\PathInfo.cs" />
     <Compile Include="Infrastructure\TestEnvironment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\SampleTest.cs" />
+    <Compile Include="Tests\BaseTestCase.cs" />
+    <Compile Include="Tests\TestUsage.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

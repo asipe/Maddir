@@ -2,7 +2,7 @@
 
 namespace Maddir.IntegrationTests.Tests {
   [TestFixture]
-  public class SampleTest {
+  public class TestUsage {
     [Test]
     public void TestNothing() {
       Assert.That(true, Is.True);
