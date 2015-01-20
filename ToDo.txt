@@ -10,3 +10,26 @@ Snarfzer
   
 SupaCharge
   * update to have a 4.5.1 build?
+  
+  
+  
+-----------------------------------------
+-----------------------------------------
+-----------------------------------------
+
+- root
+-- app1
+--- dir1
+---- dir2
+----- file1.txt [some text]
+----- file2.txt [some content]
+---- file3.txt 
+--- dir2
+-- app2
+-- app3 
+
+new Engine().Apply(string root, string markup);
+new Engine().Apply(Layout root, string layout);
+
+
+//blank lines should be ignored
