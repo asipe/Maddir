@@ -1,1 +1,10 @@
 TestUsage is misnamed
+Add lic solution folder
+ILMerge Single file assembly 
+Review all 3rd party packages and fw versions
+object returns???
+
+Snarfzer
+  * update to have a 4.5.1 build?
+  * update copy right date
+  * 

@@ -10,6 +10,11 @@ namespace Maddir.IntegrationTests.Tests {
       Helper.Setup();
     }
 
+    [TearDown]
+    public void DoTearDown() {
+      Helper.TearDown();
+    }
+
     [TestFixtureSetUp]
     public void DoFixtureSetup() {
       Helper = new MaddirHelper();

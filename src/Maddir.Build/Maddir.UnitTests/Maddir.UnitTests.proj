@@ -20,6 +20,7 @@
     <Reference Include="$(PackagesDir)\AutoFixture\lib\net40\Ploeh.AutoFixture.dll" />  
     <Reference Include="$(PackagesDir)\CompareNETObjects\lib\net451\KellermanSoftware.Compare-NET-Objects.dll" />  
     <Reference Include="$(PackagesDir)\moq\lib\net40\moq.dll" />  
+    <Reference Include="$(PackagesDir)\supacharge.core\lib\net45\supacharge.core.dll" />
   </ItemGroup>    
 
   <ItemGroup>

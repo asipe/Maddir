@@ -43,6 +43,9 @@
     <Reference Include="Ploeh.AutoFixture">
       <HintPath>..\..\thirdparty\packages\net-4.5\AutoFixture\lib\net40\Ploeh.AutoFixture.dll</HintPath>
     </Reference>
+    <Reference Include="supacharge.core">
+      <HintPath>..\..\thirdparty\packages\net-4.5.1\SupaCharge.Core\lib\net45\supacharge.core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,8 +56,17 @@
     </Compile>
     <Compile Include="BaseTestCase.cs" />
     <Compile Include="Core\EngineTest.cs" />
+    <Compile Include="Core\Generation\DirectoryBrowserTest.cs" />
+    <Compile Include="Core\Generation\MarkupGenerationEngineTest.cs" />
     <Compile Include="Core\ParserTest.cs" />
+    <Compile Include="Core\StringUtilsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Maddir.Core\Maddir.Core.csproj">
+      <Project>{05B2FB7F-A120-43FF-80B4-0568506CDCA4}</Project>
+      <Name>Maddir.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
