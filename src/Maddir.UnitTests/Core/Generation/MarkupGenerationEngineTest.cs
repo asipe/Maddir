@@ -1,4 +1,6 @@
-﻿using Maddir.Core.Generation;
+﻿// Copyright (c) Andy Sipe. All rights reserved. Licensed under the MIT License (MIT). See License.txt in the project root for license information.
+
+using Maddir.Core.Generation;
 using NUnit.Framework;
 
 namespace Maddir.UnitTests.Core.Generation {
@@ -13,12 +15,11 @@ namespace Maddir.UnitTests.Core.Generation {
     public void TestApplyWithLayoutWithSingleDirectoryGivesCorrectMarkup() {
       Assert.That(mEngine.Apply(BA("abc")), Is.EqualTo("abc"));
     }
-    
+
     [Test]
     public void TestApplyWithLayoutWithMultipleDirectoriesGivesCorrectMarkup() {
       Assert.That(mEngine.Apply(BA("abc", "def", "xyz")), Is.EqualTo("abc\r\ndef\r\nxyz"));
     }
-
 
     [SetUp]
     public void DoSetup() {
