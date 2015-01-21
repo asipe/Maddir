@@ -2,6 +2,8 @@
 
 using System.IO;
 using System.Linq;
+using Maddir.Core.Commands;
+using Maddir.Core.Model;
 using SupaCharge.Core.IOAbstractions;
 
 namespace Maddir.Core.Generation {
@@ -10,12 +12,13 @@ namespace Maddir.Core.Generation {
       mDirectory = directory;
     }
 
-    public object Browse(string root) {
-      return mDirectory
-        .GetDirectories(root)
-        .Select(path => path.Split(Path.DirectorySeparatorChar))
-        .Select(parts => parts.Last())
-        .ToArray();
+    public Layout Browse(string root) {
+      return new Layout(mDirectory
+                          .GetDirectories(root)
+                          .Select(path => path.Split(Path.DirectorySeparatorChar))
+                          .Select(parts => parts.Last())
+                          .Select(path => new AddDirectoryCommand(path))
+                          .ToArray());
     }
 
     private readonly IDirectory mDirectory;

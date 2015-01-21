@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Andy Sipe. All rights reserved. Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
+using Maddir.Core.Commands;
 using Maddir.Core.Generation;
+using Maddir.Core.Model;
 using Moq;
 using NUnit.Framework;
 using SupaCharge.Core.IOAbstractions;
@@ -9,11 +11,11 @@ namespace Maddir.UnitTests.Core.Generation {
   [TestFixture]
   public class DirectoryBrowserTest : BaseTestCase {
     [Test]
-    public void TestExecuteWithNoDirectoriesGivesEmptyResult() {
+    public void TestExecuteWithNoDirectoriesGivesEmptyLayout() {
       mDirectory
         .Setup(d => d.GetDirectories("root"))
         .Returns(BA<string>());
-      Assert.That(mBrowser.Browse("root"), Is.Empty);
+      Assert.That(mBrowser.Browse("root"), Are.EqualTo(new Layout()));
     }
 
     [Test]
@@ -21,7 +23,7 @@ namespace Maddir.UnitTests.Core.Generation {
       mDirectory
         .Setup(d => d.GetDirectories("root"))
         .Returns(BA(@"c:\root\dir1"));
-      Assert.That(mBrowser.Browse("root"), Is.EqualTo(BA("dir1")));
+      Assert.That(mBrowser.Browse("root"), Are.EqualTo(new Layout(new AddDirectoryCommand("dir1"))));
     }
 
     [Test]
@@ -31,7 +33,9 @@ namespace Maddir.UnitTests.Core.Generation {
         .Returns(BA(@"c:\root\dir1",
                     @"c:\root\dir2",
                     @"c:\root\dir3"));
-      Assert.That(mBrowser.Browse("root"), Is.EqualTo(BA("dir1", "dir2", "dir3")));
+      Assert.That(mBrowser.Browse("root"), Are.EqualTo(new Layout(new AddDirectoryCommand("dir1"),
+                                                                  new AddDirectoryCommand("dir2"),
+                                                                  new AddDirectoryCommand("dir3"))));
     }
 
     [SetUp]

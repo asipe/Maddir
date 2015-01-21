@@ -6,13 +6,19 @@ object returns???
 Snarfzer
   * update to have a 4.5.1 build?
   * update copy right date
-  * 
+ 
   
 SupaCharge
   * update to have a 4.5.1 build?
   
+Possible:
+  * encoding of the data sep?
+  * custom markup chars?
+  * when browsing should all data be read or ?
+  * multiline data?
+  * browing file props?
   
-  
+Move nunit customizations/moq customizations out
 -----------------------------------------
 -----------------------------------------
 -----------------------------------------

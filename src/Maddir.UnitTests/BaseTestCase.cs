@@ -4,11 +4,41 @@ using System.Linq;
 using KellermanSoftware.CompareNetObjects;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 using Ploeh.AutoFixture;
 
 namespace Maddir.UnitTests {
   [TestFixture]
   public abstract class BaseTestCase {
+    protected class EqualToConstraint : Constraint {
+      public EqualToConstraint(object exp) : base(exp) {
+        mExp = exp;
+      }
+
+      public override bool Matches(object act) {
+        actual = act;
+        mResult = DoCompare(act, mExp);
+        return mResult.AreEqual;
+      }
+
+      public override void WriteDescriptionTo(MessageWriter writer) {
+        writer.WriteLine(mResult.DifferencesString);
+      }
+
+      private readonly object mExp;
+      private ComparisonResult mResult;
+    }
+
+    protected static class Are {
+      public static EqualToConstraint EqualTo(object expected) {
+        return new EqualToConstraint(expected);
+      }
+    }
+
+    static BaseTestCase() {
+      _ObjectComparer.Config.IgnoreObjectTypes = true;
+    }
+
     [SetUp]
     public void BaseSetup() {
       MokFac = new MockRepository(MockBehavior.Strict);
