@@ -56,10 +56,14 @@
     </Compile>
     <Compile Include="BaseTestCase.cs" />
     <Compile Include="Core\Commands\AddDirectoryCommandTest.cs" />
+    <Compile Include="Core\Commands\AddFileCommandTest.cs" />
     <Compile Include="Core\EngineTest.cs" />
     <Compile Include="Core\Generation\DirectoryBrowserTest.cs" />
+    <Compile Include="Core\Generation\MarkupBuilderTest.cs" />
     <Compile Include="Core\Generation\MarkupGenerationEngineTest.cs" />
-    <Compile Include="Core\Model\DirectoryPropertiesTest.cs" />
+    <Compile Include="Core\Model\BaseEntryTest.cs" />
+    <Compile Include="Core\Model\DirectoryEntryTest.cs" />
+    <Compile Include="Core\Model\FileEntryTest.cs" />
     <Compile Include="Core\Model\LayoutTest.cs" />
     <Compile Include="Core\ParserTest.cs" />
     <Compile Include="Core\StringUtilsTest.cs" />

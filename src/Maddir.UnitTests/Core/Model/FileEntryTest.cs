@@ -5,12 +5,13 @@ using NUnit.Framework;
 
 namespace Maddir.UnitTests.Core.Model {
   [TestFixture]
-  public class LayoutTest : BaseTestCase {
+  public class FileEntryTest : BaseTestCase {
     [Test]
     public void TestDefaults() {
-      var commands = BA<ICommand>();
-      var layout = new Layout(commands);
-      Assert.That(layout.Commands, Is.EqualTo(commands));
+      var entry = new FileEntry(0, "aname");
+      Assert.That(entry.Type, Is.EqualTo(EntryType.File));
+      Assert.That(entry.Level, Is.EqualTo(0));
+      Assert.That(entry.Name, Is.EqualTo("aname"));
     }
   }
 }

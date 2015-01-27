@@ -3,39 +3,54 @@
 using Maddir.Core.Commands;
 using Maddir.Core.Generation;
 using Maddir.Core.Model;
+using Moq;
 using NUnit.Framework;
 
 namespace Maddir.UnitTests.Core.Generation {
   [TestFixture]
   public class MarkupGenerationEngineTest : BaseTestCase {
     [Test]
-    public void TestApplyWithEmptyLayoutGivesEmptyMarkup() {
-      Assert.That(mEngine.Apply(new Layout()), Is.Empty);
+    public void TestApplyWithEmptyLayout() {
+      mMarkupBuilder
+        .Setup(b => b.Build())
+        .Returns("markup");
+      Assert.That(mEngine.Apply(new Layout()), Is.EqualTo("markup"));
     }
 
     [Test]
-    public void TestApplyWithLayoutWithSingleDirectoryGivesCorrectMarkup() {
-      Assert.That(mEngine.Apply(new Layout(new AddDirectoryCommand("abc"))), Is.EqualTo("abc"));
+    public void TestApplyWithLayoutWithSingleCommand() {
+      mMarkupBuilder
+        .Setup(b => b.Add(IsEq(new DirectoryEntry(0, "abc"))));
+      mMarkupBuilder
+        .Setup(b => b.Build())
+        .Returns("markup");
+      Assert.That(mEngine.Apply(new Layout(new AddDirectoryCommand(0, "abc"))), Is.EqualTo("markup"));
     }
 
     [Test]
-    public void TestApplyWithLayoutWithMultipleDirectoriesGivesCorrectMarkup() {
-      Assert.That(mEngine.Apply(new Layout(new AddDirectoryCommand("abc"),
-                                           new AddDirectoryCommand("def"),
-                                           new AddDirectoryCommand("xyz"))), Is.EqualTo("abc\r\ndef\r\nxyz"));
-    }
+    public void TestApplyWithLayoutWithMultipleCommands() {
+      mMarkupBuilder
+        .Setup(b => b.Add(IsEq(new DirectoryEntry(0, "abc"))));
+      mMarkupBuilder
+        .Setup(b => b.Add(IsEq(new DirectoryEntry(1, "def"))));
+      mMarkupBuilder
+        .Setup(b => b.Add(IsEq(new DirectoryEntry(2, "xyz"))));
+      mMarkupBuilder
+        .Setup(b => b.Build())
+        .Returns("markup");
 
-    [Test]
-    public void TestApply2LayoutsInSequenceGivesCorrectMarkup() {
-      Assert.That(mEngine.Apply(new Layout(new AddDirectoryCommand("abc"))), Is.EqualTo("abc"));
-      Assert.That(mEngine.Apply(new Layout(new AddDirectoryCommand("xyz"))), Is.EqualTo("xyz"));
+      Assert.That(mEngine.Apply(new Layout(new AddDirectoryCommand(0, "abc"),
+                                           new AddDirectoryCommand(1, "def"),
+                                           new AddDirectoryCommand(2, "xyz"))), Is.EqualTo("markup"));
     }
 
     [SetUp]
     public void DoSetup() {
-      mEngine = new MarkupGenerationEngine();
+      mMarkupBuilder = Mok<IMarkupBuilder>();
+      mEngine = new MarkupGenerationEngine(mMarkupBuilder.Object);
     }
 
     private MarkupGenerationEngine mEngine;
+    private Mock<IMarkupBuilder> mMarkupBuilder;
   }
 }

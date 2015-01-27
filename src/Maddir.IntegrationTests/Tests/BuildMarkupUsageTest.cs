@@ -12,10 +12,11 @@ namespace Maddir.IntegrationTests.Tests {
   [TestFixture]
   public class BuildMarkupUsageTest : BaseTestCase {
     public sealed class Validation {
-      public Validation(string testName, Action<string> setup, string expected) {
+      public Validation(string testName, Action<string> setup, params string[] expected) {
         TestName = testName;
         Setup = setup;
-        Expected = expected;
+        Expected = StringUtils
+          .ToNewLineSepString(expected);
       }
 
       public string TestName{get;private set;}
@@ -27,22 +28,28 @@ namespace Maddir.IntegrationTests.Tests {
     public void TestUsages(Validation validation) {
       validation.Setup.Invoke(Helper.PathInfo.TestDataDir);
       var layout = new DirectoryBrowser(new DotNetDirectory()).Browse(Helper.PathInfo.TestDataDir);
-      Assert.That(new MarkupGenerationEngine().Apply(layout), Is.EqualTo(validation.Expected));
+      Assert.That(new MarkupGenerationEngine(new MarkupBuilder()).Apply(layout), Is.EqualTo(validation.Expected));
     }
 
     public IEnumerable GetUsageTests() {
       yield return new Validation("TestBuildWithNoDirectoriesGivesEmptyMarkup",
                                   root => {},
-                                  StringUtils.ToNewLineSepString(""));
+                                  "");
       yield return new Validation("TestBuildWithSingleDirectoryGivesCorrectMarkup",
                                   root => Directory.CreateDirectory(Path.Combine(root, "abc")),
-                                  StringUtils.ToNewLineSepString("abc"));
-      yield return new Validation("TestBuildWithSingleDirectoryGivesCorrectMarkup",
+                                  "d  abc");
+      yield return new Validation("TestBuildWithMutlipleDirectoriesGivesCorrectMarkup",
                                   root => {
                                     Directory.CreateDirectory(Path.Combine(root, "abc"));
                                     Directory.CreateDirectory(Path.Combine(root, "def"));
+                                    Directory.CreateDirectory(Path.Combine(root, "xyz"));
                                   },
-                                  StringUtils.ToNewLineSepString("abc", "def"));
+                                  "d  abc",
+                                  "d  def",
+                                  "d  xyz");
+      yield return new Validation("TestBuildWithSingleFile",
+                                  root => File.WriteAllText(Path.Combine(root, "abc.txt"), "abc"),
+                                  "f  abc.txt");
     }
   }
 }

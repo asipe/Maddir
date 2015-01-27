@@ -6,10 +6,10 @@ using NUnit.Framework;
 
 namespace Maddir.UnitTests.Core.Commands {
   [TestFixture]
-  public class AddDirectoryCommandTest : BaseTestCase {
+  public class AddFileCommandTest : BaseTestCase {
     [Test]
     public void TestDefault() {
-      Assert.That(new AddDirectoryCommand(0, "apath").Entry, Are.EqualTo(new DirectoryEntry(0, "apath")));
+      Assert.That(new AddFileCommand(0, "apath").Entry, Are.EqualTo(new FileEntry(0, "apath")));
     }
   }
 }

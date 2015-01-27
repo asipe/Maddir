@@ -1,22 +1,19 @@
 ﻿// Copyright (c) Andy Sipe. All rights reserved. Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
-using Maddir.Core.Commands;
 using Maddir.Core.Model;
 
 namespace Maddir.Core.Generation {
-  public class MarkupGenerationEngine : ICommandVisitor {
-    public void Visit(AddDirectoryCommand command) {
-      mLines.Add(command.Properties.Path);
+  public class MarkupGenerationEngine {
+    public MarkupGenerationEngine(IMarkupBuilder markupBuilder) {
+      mMarkupBuilder = markupBuilder;
     }
 
     public string Apply(Layout layout) {
-      mLines.Clear();
-      Array.ForEach(layout.Commands, cmd => cmd.Accept(this));
-      return StringUtils.ToNewLineSepString(mLines.ToArray());
+      Array.ForEach(layout.Commands, cmd => mMarkupBuilder.Add(cmd.Entry));
+      return mMarkupBuilder.Build();
     }
 
-    private readonly List<string> mLines = new List<string>();
+    private readonly IMarkupBuilder mMarkupBuilder;
   }
 }

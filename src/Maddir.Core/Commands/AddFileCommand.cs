@@ -3,9 +3,9 @@
 using Maddir.Core.Model;
 
 namespace Maddir.Core.Commands {
-  public class AddDirectoryCommand : ICommand {
-    public AddDirectoryCommand(int level, string path) {
-      Entry = new DirectoryEntry(level, path);
+  public class AddFileCommand : ICommand {
+    public AddFileCommand(int level, string path) {
+      Entry = new FileEntry(level, path);
     }
 
     public IEntry Entry{get;private set;}

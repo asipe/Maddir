@@ -43,12 +43,18 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Commands\AddDirectoryCommand.cs" />
+    <Compile Include="Commands\AddFileCommand.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Generation\DirectoryBrowser.cs" />
+    <Compile Include="Generation\IMarkupBuilder.cs" />
+    <Compile Include="Generation\MarkupBuilder.cs" />
     <Compile Include="Generation\MarkupGenerationEngine.cs" />
-    <Compile Include="Model\DirectoryProperties.cs" />
+    <Compile Include="Model\BaseEntry.cs" />
+    <Compile Include="Model\DirectoryEntry.cs" />
+    <Compile Include="Model\EntryType.cs" />
+    <Compile Include="Model\FileEntry.cs" />
     <Compile Include="Model\ICommand.cs" />
-    <Compile Include="Model\ICommandVisitor.cs" />
+    <Compile Include="Model\IEntry.cs" />
     <Compile Include="Model\Layout.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
