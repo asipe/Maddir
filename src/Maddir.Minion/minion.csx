@@ -11,7 +11,8 @@ var config = Require<FitterBuilder>().Build(new {
   ThirdpartyDir = @"<rootdir>\thirdparty",
   PackagesDir = @"<thirdpartydir>\packages",
   NugetExePath = @"<thirdpartydir>\nuget\nuget.exe",
-  NunitConsoleExePath = @"<thirdpartydir>\packages\common\Nunit.Runners\tools\nunit-console.exe"
+  NunitConsoleExePath = @"<thirdpartydir>\packages\common\Nunit.Runners\tools\nunit-console.exe",
+  IntegrationTestWorkingDir = @"<rootdir>\integrationtestworking"
 });
 
 void TryDelete(string dir) {
@@ -34,58 +35,106 @@ void Echo(string message) {
 }
 
 void Bootstrap() {
-  Run(config["NugetExePath"], @"install .\src\Maddir.Nuget.Packages\common\packages.config -OutputDirectory .\thirdparty\packages\common -ExcludeVersion");
-  Run(config["NugetExePath"], @"install .\src\Maddir.Nuget.Packages\net-4.5.1\packages.config -OutputDirectory .\thirdparty\packages\net-4.5.1 -ExcludeVersion");
+  RunSync(config["NugetExePath"], @"install .\src\Maddir.Nuget.Packages\common\packages.config -OutputDirectory .\thirdparty\packages\common -ExcludeVersion");
+  RunSync(config["NugetExePath"], @"install .\src\Maddir.Nuget.Packages\net-4.5.1\packages.config -OutputDirectory .\thirdparty\packages\net-4.5.1 -ExcludeVersion");
 }
 
-void Run(string exePath, string args) {
+void RunSync(string exePath, string args) {
   var info = new ProcessStartInfo {
     FileName = exePath,
     Arguments = args,
     UseShellExecute = false
   };
-  
   using (var p = Process.Start(info)) {
-    p.WaitForExit();  
-
+    p.WaitForExit();
     if (p.ExitCode != 0)
       throw new Exception(string.Format("{0} failed with code {1}", exePath, p.ExitCode));
   }
 }
 
+Task<string> Run(string exePath, string args) {
+  return Task<string>.Run(() => {
+    var info = new ProcessStartInfo {
+      FileName = exePath,
+      Arguments = args,
+      UseShellExecute = false,
+      RedirectStandardError = true,
+      RedirectStandardOutput = true,
+      WindowStyle = ProcessWindowStyle.Hidden,
+      CreateNoWindow = true
+    };
+
+    var result = "";
+
+    using (var process = Process.Start(info)) {
+      result = process.StandardError.ReadToEnd().Trim() + 
+               Environment.NewLine + 
+               Environment.NewLine + 
+               process.StandardOutput.ReadToEnd().Trim();
+
+      process.WaitForExit();
+
+      if (process.ExitCode != 0)
+        result = string.Format("{0}{1}{2} failed with code {3}", result, Environment.NewLine + Environment.NewLine, exePath, process.ExitCode);
+    }
+
+    return result;
+  });
+}
+
 void BuildAll() {
-  Run(@"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe", @".\src\Maddir.Build\Maddir.proj /ds /maxcpucount:6");
+  RunSync(@"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe", @".\src\Maddir.Build\Maddir.proj /ds /maxcpucount:6");
 }
 
-void RunTests(string name, string assembly, string framework) {
-  conzole.WriteLine("|y|----------- {0} Tests {1} -----------|", name, framework);
-  conzole.WriteLine("|y|-- {0}|", assembly);
-  Run(config["NunitConsoleExePath"], string.Format(@"{0} /nologo /framework:{1}", assembly, framework));
-  conzole.WriteLine("|y|------------------------------------------|");
-  conzole.WriteLine();
+Task<string> RunTests(string name, string assembly, string framework) {
+  return Task<string>.Run(() => {
+    var result = new StringBuilder();
+    result.AppendFormat("|y|----------- {0} Tests {1} -----------|{2}", name, framework, Environment.NewLine);
+    result.AppendFormat("|y|-- {0}|{1}", assembly, Environment.NewLine);
+    var task = Run(config["NunitConsoleExePath"], string.Format(@"{0} /nologo /noresult /framework:{1}", assembly, framework));
+    task.Wait();
+    result.AppendFormat("{0}{1}", task.Result, Environment.NewLine);
+    result.AppendFormat("|y|------------------------------------------|{0}", Environment.NewLine);
+    return result.ToString();
+  });
 }
 
-void RunUnitTestsVS() {
-  RunTests("VS Unit", @".\src\Maddir.UnitTests\bin\debug\Maddir.UnitTests.dll", "net-4.5.1");
+Task<string> RunUnitTestsVS() {
+  return RunTests("VS Unit", @".\src\Maddir.UnitTests\bin\debug\Maddir.UnitTests.dll", "net-4.5.1");
 }
 
-void RunIntegrationTestsVS() {
-  RunTests("VS Integration", @".\src\Maddir.IntegrationTests\bin\debug\Maddir.IntegrationTests.dll", "net-4.5.1");
+Task<string> RunIntegrationTestsVS() {
+  return RunTests("VS Integration", @".\src\Maddir.IntegrationTests\bin\debug\Maddir.IntegrationTests.dll", "net-4.5.1");
 }
 
-void RunUnitTestsDebug() {
-  RunTests("Debug Unit", Path.Combine(config["DebugDir"], @"net-4.5.1\Maddir.UnitTests\Maddir.UnitTests.dll"), "net-4.5.1");
+Task<string> RunUnitTestsDebug() {
+  return RunTests("Debug Unit", Path.Combine(config["DebugDir"], @"net-4.5.1\Maddir.UnitTests\Maddir.UnitTests.dll"), "net-4.5.1");
 }
 
-void RunIntegrationTestsDebug() {
-  RunTests("Debug Integration", Path.Combine(config["DebugDir"], @"net-4.5.1\Maddir.IntegrationTests\Maddir.IntegrationTests.dll"), "net-4.5.1");
+Task<string> RunIntegrationTestsDebug() {
+  return RunTests("Debug Integration", Path.Combine(config["DebugDir"], @"net-4.5.1\Maddir.IntegrationTests\Maddir.IntegrationTests.dll"), "net-4.5.1");
+}
+
+void RunAndWaitAndEcho(params Func<Task<string>>[] runners) {
+  var tasks = runners
+    .Select(runner => runner.Invoke())
+    .ToArray();
+
+  Task<string>.WaitAll(tasks);
+
+  Array.ForEach(tasks, task => conzole.WriteLine(task.Result));
 }
 
 void RunAllTests() {
-  RunUnitTestsVS();
-  RunUnitTestsDebug();
-  RunIntegrationTestsVS();
-  RunIntegrationTestsDebug();
+  RunAndWaitAndEcho(RunUnitTestsVS,
+                    RunUnitTestsDebug,
+                    RunIntegrationTestsVS,
+                    RunIntegrationTestsDebug);
+}
+
+void InitITWorkingDir() {
+  if (!Directory.Exists(config["IntegrationTestWorkingDir"]))
+    Directory.CreateDirectory(config["IntegrationTestWorkingDir"]);
 }
 
 void ProcessCommands() {
@@ -121,18 +170,21 @@ void ProcessCommands() {
             BuildAll();
             break;  
           case ("run.unit.tests.vs"):
-            RunUnitTestsVS();
-            break;  
+            RunAndWaitAndEcho(RunUnitTestsVS);
+            break;
           case ("run.unit.tests.debug"):
-            RunUnitTestsDebug();
-            break;           
+            RunAndWaitAndEcho(RunUnitTestsDebug);
+            break;
           case ("run.integration.tests.vs"):
-            RunIntegrationTestsVS();
-            break;             
+            InitITWorkingDir();
+            RunAndWaitAndEcho(RunIntegrationTestsVS);
+            break;
           case ("run.integration.tests.debug"):
-            RunIntegrationTestsDebug();
-            break;                       
+            InitITWorkingDir();
+            RunAndWaitAndEcho(RunIntegrationTestsDebug);
+            break;
           case ("run.all.tests"):
+            InitITWorkingDir();
             RunAllTests();
             break; 
           case ("cycle"):

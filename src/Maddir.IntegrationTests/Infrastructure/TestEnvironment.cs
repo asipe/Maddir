@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Andy Sipe. All rights reserved. Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using System;
-using System.IO;
+using SupaCharge.Core.IOAbstractions;
 
 namespace Maddir.IntegrationTests.Infrastructure {
   public class TestEnvironment {
@@ -15,21 +15,22 @@ namespace Maddir.IntegrationTests.Infrastructure {
     }
 
     public void TearDown() {
-      if (Directory.Exists(mInfo.TestWorkingDir))
-        Directory.Delete(mInfo.TestWorkingDir, true);
+      if (_Directory.Exists(mInfo.TestWorkingDir))
+        _Directory.Delete(mInfo.TestWorkingDir, 25);
     }
 
     private void CreateDirectories() {
-      if (!Directory.Exists(mInfo.TestRootDir))
-        Directory.CreateDirectory(mInfo.TestRootDir);
-      Directory.CreateDirectory(mInfo.TestDataDir);
+      if (!_Directory.Exists(mInfo.TestRootDir))
+        throw new Exception(string.Format("{0} directory does not exist", mInfo.TestRootDir));
+      _Directory.CreateDirectory(mInfo.TestDataDir);
     }
 
     private void Validate() {
-      if (Directory.Exists(mInfo.TestWorkingDir))
+      if (_Directory.Exists(mInfo.TestWorkingDir))
         throw new Exception(string.Format("{0} already exists", mInfo.TestWorkingDir));
     }
 
     private readonly PathInfo mInfo;
+    private static readonly DotNetDirectory _Directory = new DotNetDirectory();
   }
 }
