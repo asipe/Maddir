@@ -5,35 +5,49 @@ using System.IO;
 using System.Linq;
 using Maddir.Core.Commands;
 using Maddir.Core.Model;
-using SupaCharge.Core.IOAbstractions;
+using Snarfz.Core;
 
 namespace Maddir.Core.Generation {
   public class DirectoryBrowser {
-    public DirectoryBrowser(IDirectory directory) {
-      mDirectory = directory;
+    public DirectoryBrowser(IScanner scanner) {
+      mScanner = scanner;
     }
 
     public Layout Browse(string root) {
-      return new Layout(GetDirectories(root)
-                          .Concat(GetFiles(root))
-                          .ToArray());
+      var commands = new List<ICommand>();
+      var config = new Config(root) {
+                                      EventErrorMode = EventErrorMode.Throw,
+                                      ScanErrorMode = ScanErrorMode.Throw
+                                    };
+      var count = 0;
+      config.OnDirectory += (o, a) => ProcessDirectory(commands, a, ref count);
+      config.OnFile += (o, a) => ProcessFile(commands, a);
+      mScanner.Start(config);
+      return new Layout(commands.ToArray());
     }
 
-    private IEnumerable<ICommand> GetDirectories(string root) {
-      return mDirectory
-        .GetDirectories(root)
-        .Select(path => path.Split(Path.DirectorySeparatorChar))
-        .Select(parts => parts.Last())
-        .Select(path => new AddDirectoryCommand(0, path));
+    private static void ProcessFile(ICollection<ICommand> commands, BaseVisitEventArgs args) {
+      commands
+        .Add(new AddFileCommand(0, Path.GetFileName(args.Path)));
     }
 
-    private IEnumerable<ICommand> GetFiles(string root) {
-      return mDirectory
-        .GetFiles(root, "*")
-        .Select(Path.GetFileName)
-        .Select(path => new AddFileCommand(0, path));
+    private static void ProcessDirectory(ICollection<ICommand> commands, BaseVisitEventArgs args, ref int count) {
+      if (count == 0) {
+        ++count;
+        return;
+      }
+
+      commands
+        .Add(new AddDirectoryCommand(0, ExtractDirectoryName(args)));
     }
 
-    private readonly IDirectory mDirectory;
+    private static string ExtractDirectoryName(BaseVisitEventArgs args) {
+      return args
+        .Path
+        .Split(Path.DirectorySeparatorChar)
+        .Last();
+    }
+
+    private readonly IScanner mScanner;
   }
 }

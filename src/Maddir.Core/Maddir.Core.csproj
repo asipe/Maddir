@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="snarfz.core">
+      <HintPath>..\..\thirdparty\packages\net-4.5.1\Snarfz\lib\net45\snarfz.core.dll</HintPath>
+    </Reference>
     <Reference Include="supacharge.core">
       <HintPath>..\..\thirdparty\packages\net-4.5.1\SupaCharge.Core\lib\net45\supacharge.core.dll</HintPath>
     </Reference>

@@ -6,7 +6,7 @@ using System.IO;
 using Maddir.Core;
 using Maddir.Core.Generation;
 using NUnit.Framework;
-using SupaCharge.Core.IOAbstractions;
+using Snarfz.Core;
 
 namespace Maddir.IntegrationTests.Tests {
   [TestFixture]
@@ -27,7 +27,7 @@ namespace Maddir.IntegrationTests.Tests {
     [TestCaseSource("GetUsageTests")]
     public void TestUsages(Validation validation) {
       validation.Setup.Invoke(Helper.PathInfo.TestDataDir);
-      var layout = new DirectoryBrowser(new DotNetDirectory()).Browse(Helper.PathInfo.TestDataDir);
+      var layout = new DirectoryBrowser(Snarfzer.NewScanner()).Browse(Helper.PathInfo.TestDataDir);
       Assert.That(new MarkupGenerationEngine(new MarkupBuilder()).Apply(layout), Is.EqualTo(validation.Expected));
     }
 

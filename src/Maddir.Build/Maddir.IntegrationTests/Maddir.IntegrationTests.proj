@@ -18,6 +18,7 @@
     <Reference Include="$(DebugDir)\Maddir.Core\Maddir.Core.dll" />
     <Reference Include="$(PackagesDir)\nunit\lib\nunit.framework.dll" />
     <Reference Include="$(PackagesDir)\supacharge.core\lib\net45\supacharge.core.dll" />
+    <Reference Include="$(PackagesDir)\snarfz\lib\net45\snarfz.core.dll" />
   </ItemGroup>  
 
   <ItemGroup>

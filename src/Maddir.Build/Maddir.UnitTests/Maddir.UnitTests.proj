@@ -21,6 +21,7 @@
     <Reference Include="$(PackagesDir)\CompareNETObjects\lib\net451\KellermanSoftware.Compare-NET-Objects.dll" />  
     <Reference Include="$(PackagesDir)\moq\lib\net40\moq.dll" />  
     <Reference Include="$(PackagesDir)\supacharge.core\lib\net45\supacharge.core.dll" />
+    <Reference Include="$(PackagesDir)\snarfz\lib\net45\snarfz.core.dll" />
   </ItemGroup>    
 
   <ItemGroup>

@@ -16,6 +16,7 @@
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="$(PackagesDir)\supacharge.core\lib\net45\supacharge.core.dll" />
+    <Reference Include="$(PackagesDir)\snarfz\lib\net45\snarfz.core.dll" />
   </ItemGroup>
 
   <ItemGroup>
