@@ -22,6 +22,10 @@ namespace Maddir.IntegrationTests.Tests {
       public string TestName{get;private set;}
       public Action<string> Setup{get;private set;}
       public string Expected{get;private set;}
+
+      public override string ToString() {
+        return TestName;
+      }
     }
 
     [TestCaseSource("GetUsageTests")]

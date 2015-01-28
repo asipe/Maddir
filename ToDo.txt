@@ -8,7 +8,8 @@ blank lines should be ignored in markup parsing?
 Snarfzer
   * update to have a 4.5.1 build?
   * update copy right date
-  * provide configuration to NOT notify on root dir (this will remove the ref crap in Maddir processDirectory)
+  * provide configuration to NOT notify on root dir (this will 
+    remove the ref crap in Maddir processDirectory)  --review this carefully
  
  
 Possible:
