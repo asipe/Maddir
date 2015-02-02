@@ -54,6 +54,30 @@ namespace Maddir.IntegrationTests.Tests {
       yield return new Validation("TestBuildWithSingleFile",
                                   root => File.WriteAllText(Path.Combine(root, "abc.txt"), "abc"),
                                   "f  abc.txt");
+      yield return new Validation("TestBuildWithMutlipleFiles",
+                                  root => {
+                                    File.WriteAllText(Path.Combine(root, "abc.txt"), "abc");
+                                    File.WriteAllText(Path.Combine(root, "def.txt"), "def");
+                                    File.WriteAllText(Path.Combine(root, "xyz.txt"), "xyz");
+                                  },
+                                  "f  abc.txt",
+                                  "f  def.txt",
+                                  "f  xyz.txt");
+      yield return new Validation("TestBuildWithMutlipleMixedFilesAndDirectories",
+                                  root => {
+                                    Directory.CreateDirectory(Path.Combine(root, "abc"));
+                                    Directory.CreateDirectory(Path.Combine(root, "def"));
+                                    Directory.CreateDirectory(Path.Combine(root, "xyz"));
+                                    File.WriteAllText(Path.Combine(root, "abc.txt"), "abc");
+                                    File.WriteAllText(Path.Combine(root, "def.txt"), "def");
+                                    File.WriteAllText(Path.Combine(root, "xyz.txt"), "xyz");
+                                  },
+                                  "f  abc.txt",
+                                  "f  def.txt",
+                                  "f  xyz.txt",
+                                  "d  abc",
+                                  "d  def",
+                                  "d  xyz");
     }
   }
 }
