@@ -56,7 +56,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\BaseTestCase.cs" />
     <Compile Include="Tests\BuildMarkupUsageTest.cs" />
-    <Compile Include="Tests\TestUsage.cs" />
+    <Compile Include="Tests\TestTreeBuilding.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Maddir.Core\Maddir.Core.csproj">

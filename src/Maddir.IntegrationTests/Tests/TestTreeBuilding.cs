@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace Maddir.IntegrationTests.Tests {
   [TestFixture]
-  public class TestUsage : BaseTestCase {
+  public class TestTreeBuilding : BaseTestCase {
     [Test]
     public void TestEmptyMarkupGivesNoDirectoriesOrFiles() {
       var layout = new Parser().Parse("");
