@@ -30,7 +30,7 @@ namespace Maddir.IntegrationTests.Infrastructure {
         throw new Exception(string.Format("{0} already exists", mInfo.TestWorkingDir));
     }
 
-    private readonly PathInfo mInfo;
     private static readonly DotNetDirectory _Directory = new DotNetDirectory();
+    private readonly PathInfo mInfo;
   }
 }

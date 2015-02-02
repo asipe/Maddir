@@ -3,7 +3,6 @@
 using System;
 using System.Collections;
 using System.IO;
-using Maddir.Core;
 using Maddir.Core.Generation;
 using Maddir.Core.Utility;
 using NUnit.Framework;

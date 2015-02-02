@@ -29,7 +29,7 @@ namespace Maddir.Core.Generation {
 
     private static void ProcessFile(ICollection<ICommand> commands, Level level, BaseVisitEventArgs args) {
       commands
-        .Add(new AddFileCommand(level.GetForPath(args.Path), 
+        .Add(new AddFileCommand(level.GetForPath(args.Path),
                                 Path.GetFileName(args.Path)));
     }
 
@@ -40,7 +40,7 @@ namespace Maddir.Core.Generation {
       }
 
       commands
-        .Add(new AddDirectoryCommand(level.GetForPath(args.Path), 
+        .Add(new AddDirectoryCommand(level.GetForPath(args.Path),
                                      ExtractDirectoryName(args)));
     }
 
