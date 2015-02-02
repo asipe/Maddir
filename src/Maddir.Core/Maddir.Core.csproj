@@ -50,6 +50,7 @@
     <Compile Include="Engine.cs" />
     <Compile Include="Generation\DirectoryBrowser.cs" />
     <Compile Include="Generation\IMarkupBuilder.cs" />
+    <Compile Include="Generation\Level.cs" />
     <Compile Include="Generation\MarkupBuilder.cs" />
     <Compile Include="Generation\MarkupGenerationEngine.cs" />
     <Compile Include="Model\BaseEntry.cs" />

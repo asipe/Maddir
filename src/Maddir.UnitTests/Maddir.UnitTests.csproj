@@ -62,6 +62,7 @@
     <Compile Include="Core\Commands\AddFileCommandTest.cs" />
     <Compile Include="Core\EngineTest.cs" />
     <Compile Include="Core\Generation\DirectoryBrowserTest.cs" />
+    <Compile Include="Core\Generation\LevelTest.cs" />
     <Compile Include="Core\Generation\MarkupBuilderTest.cs" />
     <Compile Include="Core\Generation\MarkupGenerationEngineTest.cs" />
     <Compile Include="Core\Model\BaseEntryTest.cs" />

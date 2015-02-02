@@ -14,31 +14,34 @@ namespace Maddir.Core.Generation {
     }
 
     public Layout Browse(string root) {
+      var level = new Level(root);
       var commands = new List<ICommand>();
       var config = new Config(root) {
                                       EventErrorMode = EventErrorMode.Throw,
                                       ScanErrorMode = ScanErrorMode.Throw
                                     };
       var count = 0;
-      config.OnDirectory += (o, a) => ProcessDirectory(commands, a, ref count);
-      config.OnFile += (o, a) => ProcessFile(commands, a);
+      config.OnDirectory += (o, a) => ProcessDirectory(commands, level, a, ref count);
+      config.OnFile += (o, a) => ProcessFile(commands, level, a);
       mScanner.Start(config);
       return new Layout(commands.ToArray());
     }
 
-    private static void ProcessFile(ICollection<ICommand> commands, BaseVisitEventArgs args) {
+    private static void ProcessFile(ICollection<ICommand> commands, Level level, BaseVisitEventArgs args) {
       commands
-        .Add(new AddFileCommand(0, Path.GetFileName(args.Path)));
+        .Add(new AddFileCommand(level.GetForPath(args.Path), 
+                                Path.GetFileName(args.Path)));
     }
 
-    private static void ProcessDirectory(ICollection<ICommand> commands, BaseVisitEventArgs args, ref int count) {
+    private static void ProcessDirectory(ICollection<ICommand> commands, Level level, BaseVisitEventArgs args, ref int count) {
       if (count == 0) {
         ++count;
         return;
       }
 
       commands
-        .Add(new AddDirectoryCommand(0, ExtractDirectoryName(args)));
+        .Add(new AddDirectoryCommand(level.GetForPath(args.Path), 
+                                     ExtractDirectoryName(args)));
     }
 
     private static string ExtractDirectoryName(BaseVisitEventArgs args) {

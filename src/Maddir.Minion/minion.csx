@@ -67,10 +67,10 @@ Task<string> Run(string exePath, string args) {
     var result = "";
 
     using (var process = Process.Start(info)) {
-      result = process.StandardError.ReadToEnd().Trim() + 
+      result = process.StandardOutput.ReadToEnd().Trim() + 
                Environment.NewLine + 
                Environment.NewLine + 
-               process.StandardOutput.ReadToEnd().Trim();
+               process.StandardError.ReadToEnd().Trim();
 
       process.WaitForExit();
 

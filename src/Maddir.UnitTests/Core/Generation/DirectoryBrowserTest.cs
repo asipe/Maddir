@@ -29,7 +29,7 @@ namespace Maddir.UnitTests.Core.Generation {
                                                   BA("",
                                                      @"c:\root\dir1"),
                                                   BA<string>()));
-      Assert.That(mBrowser.Browse("root"), Are.EqualTo(new Layout(new AddDirectoryCommand(0, "dir1"))));
+      Assert.That(mBrowser.Browse(@"c:\root"), Are.EqualTo(new Layout(new AddDirectoryCommand(0, "dir1"))));
     }
 
     [Test]
@@ -42,9 +42,9 @@ namespace Maddir.UnitTests.Core.Generation {
                                                      @"c:\root\dir2",
                                                      @"c:\root\dir3"),
                                                   BA<string>()));
-      Assert.That(mBrowser.Browse("root"), Are.EqualTo(new Layout(new AddDirectoryCommand(0, "dir1"),
-                                                                  new AddDirectoryCommand(0, "dir2"),
-                                                                  new AddDirectoryCommand(0, "dir3"))));
+      Assert.That(mBrowser.Browse(@"c:\root"), Are.EqualTo(new Layout(new AddDirectoryCommand(0, "dir1"),
+                                                                      new AddDirectoryCommand(0, "dir2"),
+                                                                      new AddDirectoryCommand(0, "dir3"))));
     }
 
     [Test]
@@ -54,7 +54,7 @@ namespace Maddir.UnitTests.Core.Generation {
         .Callback<Config>(config => TriggerEvents(config,
                                                   BA(""),
                                                   BA(@"c:\root\file1.txt")));
-      Assert.That(mBrowser.Browse("root"), Are.EqualTo(new Layout(new AddFileCommand(0, "file1.txt"))));
+      Assert.That(mBrowser.Browse(@"c:\root"), Are.EqualTo(new Layout(new AddFileCommand(0, "file1.txt"))));
     }
 
     [Test]
@@ -66,9 +66,9 @@ namespace Maddir.UnitTests.Core.Generation {
                                                   BA(@"c:\root\file1.txt",
                                                      @"c:\root\file2.txt",
                                                      @"c:\root\file3.txt")));
-      Assert.That(mBrowser.Browse("root"), Are.EqualTo(new Layout(new AddFileCommand(0, "file1.txt"),
-                                                                  new AddFileCommand(0, "file2.txt"),
-                                                                  new AddFileCommand(0, "file3.txt"))));
+      Assert.That(mBrowser.Browse(@"c:\root"), Are.EqualTo(new Layout(new AddFileCommand(0, "file1.txt"),
+                                                                      new AddFileCommand(0, "file2.txt"),
+                                                                      new AddFileCommand(0, "file3.txt"))));
     }
 
     [Test]
@@ -87,12 +87,12 @@ namespace Maddir.UnitTests.Core.Generation {
                                              @"c:\root\dir3"),
                                           BA<string>());
                           });
-      Assert.That(mBrowser.Browse("root"), Are.EqualTo(new Layout(new AddFileCommand(0, "file1.txt"),
-                                                                  new AddFileCommand(0, "file2.txt"),
-                                                                  new AddFileCommand(0, "file3.txt"),
-                                                                  new AddDirectoryCommand(0, "dir1"),
-                                                                  new AddDirectoryCommand(0, "dir2"),
-                                                                  new AddDirectoryCommand(0, "dir3"))));
+      Assert.That(mBrowser.Browse(@"c:\root"), Are.EqualTo(new Layout(new AddFileCommand(0, "file1.txt"),
+                                                                      new AddFileCommand(0, "file2.txt"),
+                                                                      new AddFileCommand(0, "file3.txt"),
+                                                                      new AddDirectoryCommand(0, "dir1"),
+                                                                      new AddDirectoryCommand(0, "dir2"),
+                                                                      new AddDirectoryCommand(0, "dir3"))));
     }
 
     [SetUp]
