@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Maddir.Core.Model;
+using Maddir.Core.Utility;
 
 namespace Maddir.Core.Generation {
   public class MarkupBuilder : IMarkupBuilder {

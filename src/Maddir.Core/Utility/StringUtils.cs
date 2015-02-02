@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Maddir.Core {
+namespace Maddir.Core.Utility {
   public static class StringUtils {
     public static string ToNewLineSepString(params string[] values) {
       return string.Join(Environment.NewLine, values);

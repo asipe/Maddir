@@ -3,6 +3,7 @@
 using Maddir.Core;
 using Maddir.Core.Generation;
 using Maddir.Core.Model;
+using Maddir.Core.Utility;
 using NUnit.Framework;
 
 namespace Maddir.UnitTests.Core.Generation {

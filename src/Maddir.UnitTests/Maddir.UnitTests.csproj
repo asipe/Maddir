@@ -70,7 +70,7 @@
     <Compile Include="Core\Model\FileEntryTest.cs" />
     <Compile Include="Core\Model\LayoutTest.cs" />
     <Compile Include="Core\ParserTest.cs" />
-    <Compile Include="Core\StringUtilsTest.cs" />
+    <Compile Include="Core\Utility\StringUtilsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

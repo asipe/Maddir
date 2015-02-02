@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Andy Sipe. All rights reserved. Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
-using Maddir.Core;
+using Maddir.Core.Utility;
 using NUnit.Framework;
 
-namespace Maddir.UnitTests.Core {
+namespace Maddir.UnitTests.Core.Utility {
   [TestFixture]
   public class StringUtilsTest : BaseTestCase {
     [TestCase(new string[0], "")]
