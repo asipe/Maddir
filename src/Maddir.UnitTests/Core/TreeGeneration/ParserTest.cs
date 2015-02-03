@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Andy Sipe. All rights reserved. Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
-using Maddir.Core;
 using Maddir.Core.Commands;
 using Maddir.Core.Model;
+using Maddir.Core.TreeGeneration;
 using Maddir.Core.Utility;
 using NUnit.Framework;
 
-namespace Maddir.UnitTests.Core {
+namespace Maddir.UnitTests.Core.TreeGeneration {
   [TestFixture]
   public class ParserTest : BaseTestCase {
     [TestCase(new string[0], "")]

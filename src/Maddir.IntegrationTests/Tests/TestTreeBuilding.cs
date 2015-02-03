@@ -3,6 +3,7 @@
 using System.Collections;
 using Maddir.Core;
 using Maddir.Core.MarkupGeneration;
+using Maddir.Core.TreeGeneration;
 using Maddir.Core.Utility;
 using NUnit.Framework;
 using Snarfz.Core;

@@ -47,8 +47,6 @@
     </Compile>
     <Compile Include="Commands\AddDirectoryCommand.cs" />
     <Compile Include="Commands\AddFileCommand.cs" />
-    <Compile Include="Engine.cs" />
-    <Compile Include="LineParser.cs" />
     <Compile Include="MaddirException.cs" />
     <Compile Include="MarkupGeneration\DirectoryBrowser.cs" />
     <Compile Include="MarkupGeneration\IMarkupBuilder.cs" />
@@ -62,8 +60,10 @@
     <Compile Include="Model\ICommand.cs" />
     <Compile Include="Model\IEntry.cs" />
     <Compile Include="Model\Layout.cs" />
-    <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TreeGeneration\Engine.cs" />
+    <Compile Include="TreeGeneration\LineParser.cs" />
+    <Compile Include="TreeGeneration\Parser.cs" />
     <Compile Include="Utility\StringUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

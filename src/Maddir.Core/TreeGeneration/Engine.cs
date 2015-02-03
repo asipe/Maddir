@@ -5,7 +5,7 @@ using System.IO;
 using Maddir.Core.Model;
 using SupaCharge.Core.IOAbstractions;
 
-namespace Maddir.Core {
+namespace Maddir.Core.TreeGeneration {
   public class Engine {
     public Engine(IDirectory directory, IFile file) {
       mDirectory = directory;

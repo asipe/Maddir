@@ -3,9 +3,10 @@
 using System.Collections;
 using Maddir.Core;
 using Maddir.Core.Model;
+using Maddir.Core.TreeGeneration;
 using NUnit.Framework;
 
-namespace Maddir.UnitTests.Core {
+namespace Maddir.UnitTests.Core.TreeGeneration {
   [TestFixture]
   public class LineParserTest : BaseTestCase {
     [TestCaseSource("GetUsageTests")]

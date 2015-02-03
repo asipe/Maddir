@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Andy Sipe. All rights reserved. Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using System.IO;
-using Maddir.Core;
 using Maddir.Core.Commands;
 using Maddir.Core.Model;
+using Maddir.Core.TreeGeneration;
 using Moq;
 using NUnit.Framework;
 using SupaCharge.Core.IOAbstractions;
 
-namespace Maddir.UnitTests.Core {
+namespace Maddir.UnitTests.Core.TreeGeneration {
   [TestFixture]
   public class EngineTest : BaseTestCase {
     [Test]

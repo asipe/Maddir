@@ -60,8 +60,6 @@
     <Compile Include="BaseTestCase.cs" />
     <Compile Include="Core\Commands\AddDirectoryCommandTest.cs" />
     <Compile Include="Core\Commands\AddFileCommandTest.cs" />
-    <Compile Include="Core\EngineTest.cs" />
-    <Compile Include="Core\LineParserTest.cs" />
     <Compile Include="Core\MarkupGeneration\DirectoryBrowserTest.cs" />
     <Compile Include="Core\MarkupGeneration\LevelTest.cs" />
     <Compile Include="Core\MarkupGeneration\MarkupBuilderTest.cs" />
@@ -70,7 +68,9 @@
     <Compile Include="Core\Model\DirectoryEntryTest.cs" />
     <Compile Include="Core\Model\FileEntryTest.cs" />
     <Compile Include="Core\Model\LayoutTest.cs" />
-    <Compile Include="Core\ParserTest.cs" />
+    <Compile Include="Core\TreeGeneration\EngineTest.cs" />
+    <Compile Include="Core\TreeGeneration\LineParserTest.cs" />
+    <Compile Include="Core\TreeGeneration\ParserTest.cs" />
     <Compile Include="Core\Utility\StringUtilsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

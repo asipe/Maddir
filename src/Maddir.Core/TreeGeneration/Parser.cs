@@ -7,7 +7,7 @@ using System.Linq;
 using Maddir.Core.Commands;
 using Maddir.Core.Model;
 
-namespace Maddir.Core {
+namespace Maddir.Core.TreeGeneration {
   public class Parser {
     public Layout Parse(string markup) {
       var map = new Dictionary<int, string>();

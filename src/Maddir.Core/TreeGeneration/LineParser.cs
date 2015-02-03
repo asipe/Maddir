@@ -3,7 +3,7 @@
 using System.Text.RegularExpressions;
 using Maddir.Core.Model;
 
-namespace Maddir.Core {
+namespace Maddir.Core.TreeGeneration {
   public class LineParser {
     public IEntry Parse(string line) {
       var match = _Pattern.Match(line);
