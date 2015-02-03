@@ -10,7 +10,7 @@ using SupaCharge.Core.IOAbstractions;
 
 namespace Maddir.IntegrationTests.Tests {
   [TestFixture]
-  public class TestTreeBuilding : BaseTestCase {
+  public class TreeBuildingTest : BaseTestCase {
     public sealed class Validation {
       public Validation(string testName, params string[] expected) {
         TestName = testName;
