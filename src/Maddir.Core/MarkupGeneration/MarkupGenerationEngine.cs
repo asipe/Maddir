@@ -3,7 +3,7 @@
 using System;
 using Maddir.Core.Model;
 
-namespace Maddir.Core.Generation {
+namespace Maddir.Core.MarkupGeneration {
   public class MarkupGenerationEngine {
     public MarkupGenerationEngine(IMarkupBuilder markupBuilder) {
       mMarkupBuilder = markupBuilder;

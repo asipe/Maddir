@@ -2,13 +2,13 @@
 
 using System;
 using Maddir.Core.Commands;
-using Maddir.Core.Generation;
+using Maddir.Core.MarkupGeneration;
 using Maddir.Core.Model;
 using Moq;
 using NUnit.Framework;
 using Snarfz.Core;
 
-namespace Maddir.UnitTests.Core.Generation {
+namespace Maddir.UnitTests.Core.MarkupGeneration {
   [TestFixture]
   public class DirectoryBrowserTest : BaseTestCase {
     [Test]

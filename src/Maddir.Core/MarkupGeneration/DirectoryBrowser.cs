@@ -7,7 +7,7 @@ using Maddir.Core.Commands;
 using Maddir.Core.Model;
 using Snarfz.Core;
 
-namespace Maddir.Core.Generation {
+namespace Maddir.Core.MarkupGeneration {
   public class DirectoryBrowser {
     public DirectoryBrowser(IScanner scanner) {
       mScanner = scanner;

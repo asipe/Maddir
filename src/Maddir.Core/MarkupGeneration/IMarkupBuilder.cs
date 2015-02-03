@@ -2,7 +2,7 @@
 
 using Maddir.Core.Model;
 
-namespace Maddir.Core.Generation {
+namespace Maddir.Core.MarkupGeneration {
   public interface IMarkupBuilder {
     string Build();
     void Add(IEntry info);

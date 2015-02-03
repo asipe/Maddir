@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Andy Sipe. All rights reserved. Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
-using Maddir.Core.Generation;
+using Maddir.Core.MarkupGeneration;
 using Maddir.Core.Model;
 using Maddir.Core.Utility;
 using NUnit.Framework;
 
-namespace Maddir.UnitTests.Core.Generation {
+namespace Maddir.UnitTests.Core.MarkupGeneration {
   [TestFixture]
   public class MarkupBuilderTest : BaseTestCase {
     [Test]

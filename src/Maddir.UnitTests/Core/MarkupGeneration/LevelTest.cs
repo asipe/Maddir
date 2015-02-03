@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Andy Sipe. All rights reserved. Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
-using Maddir.Core.Generation;
+using Maddir.Core.MarkupGeneration;
 using NUnit.Framework;
 
-namespace Maddir.UnitTests.Core.Generation {
+namespace Maddir.UnitTests.Core.MarkupGeneration {
   [TestFixture]
   public class LevelTest : BaseTestCase {
     [TestCase(@"c:\app1\data", @"c:\app1\data\abc.txt", 0)]

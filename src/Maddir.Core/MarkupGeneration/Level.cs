@@ -3,7 +3,7 @@
 using System.IO;
 using System.Linq;
 
-namespace Maddir.Core.Generation {
+namespace Maddir.Core.MarkupGeneration {
   public class Level {
     public Level(string root) {
       mRoot = root;

@@ -5,7 +5,7 @@ using System.Linq;
 using Maddir.Core.Model;
 using Maddir.Core.Utility;
 
-namespace Maddir.Core.Generation {
+namespace Maddir.Core.MarkupGeneration {
   public class MarkupBuilder : IMarkupBuilder {
     public string Build() {
       var lines = mEntries
