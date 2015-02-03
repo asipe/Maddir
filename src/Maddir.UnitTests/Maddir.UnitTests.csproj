@@ -65,6 +65,7 @@
     <Compile Include="Core\Generation\LevelTest.cs" />
     <Compile Include="Core\Generation\MarkupBuilderTest.cs" />
     <Compile Include="Core\Generation\MarkupGenerationEngineTest.cs" />
+    <Compile Include="Core\LineParserTest.cs" />
     <Compile Include="Core\Model\BaseEntryTest.cs" />
     <Compile Include="Core\Model\DirectoryEntryTest.cs" />
     <Compile Include="Core\Model\FileEntryTest.cs" />

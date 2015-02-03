@@ -8,7 +8,7 @@ namespace Maddir.UnitTests.Core.Commands {
   [TestFixture]
   public class AddDirectoryCommandTest : BaseTestCase {
     [Test]
-    public void TestDefault() {
+    public void TestDefaultLevelCtor() {
       Assert.That(new AddDirectoryCommand(0, "apath").Entry, Are.EqualTo(new DirectoryEntry(0, "apath")));
     }
   }

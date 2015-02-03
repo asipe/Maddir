@@ -53,6 +53,8 @@
     <Compile Include="Generation\Level.cs" />
     <Compile Include="Generation\MarkupBuilder.cs" />
     <Compile Include="Generation\MarkupGenerationEngine.cs" />
+    <Compile Include="LineParser.cs" />
+    <Compile Include="MaddirException.cs" />
     <Compile Include="Model\BaseEntry.cs" />
     <Compile Include="Model\DirectoryEntry.cs" />
     <Compile Include="Model\EntryType.cs" />

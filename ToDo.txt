@@ -5,6 +5,9 @@ add test to enusre lic header is added
 is lic header ok?
 blank lines should be ignored in markup parsing?
 
+Should throw Maddir specifc exception vs Exception
+Review Other usags of EntryType and see how 'unknown' is handled  - there are several review 'f'/'d' tereniary, etc..
+
 Snarfzer
   * update to have a 4.5.1 build?
   * update copy right date
@@ -20,6 +23,13 @@ Possible:
   * browing file props?
   
 Move nunit customizations/moq customizations out
+
+PARSERTEST
+    //TODO: invalid markup
+    //        *unknown entry type
+    //maybe a ctor for commands which takes an entry...
+    
+    
 -----------------------------------------
 -----------------------------------------
 -----------------------------------------
