@@ -32,7 +32,8 @@ namespace Maddir.IntegrationTests.Tests {
     public void TestUsages(Validation validation) {
       validation.Setup.Invoke(Helper.PathInfo.TestDataDir);
       var layout = new DirectoryBrowser(Snarfzer.NewScanner()).Browse(Helper.PathInfo.TestDataDir);
-      Assert.That(new MarkupGenerationEngine(new MarkupBuilder()).Apply(layout), Is.EqualTo(validation.Expected));
+      var actual = new MarkupGenerationEngine(new MarkupBuilder()).Apply(layout);
+      Assert.That(actual, Is.EqualTo(validation.Expected), actual);
     }
 
     public IEnumerable GetUsageTests() {
@@ -152,6 +153,75 @@ namespace Maddir.IntegrationTests.Tests {
                                   "f        file4a.txt",
                                   "f        file4b.txt",
                                   "f        file4c.txt");
+      yield return new Validation("TestBuildWithDirectoryTreeWithMultipleLevelsWithMultipleFiles",
+                                  root => {
+                                    File.WriteAllText(Path.Combine(root, "file1a.txt"), "file1a");
+                                    File.WriteAllText(Path.Combine(root, "file1b.txt"), "file1b");
+                                    File.WriteAllText(Path.Combine(root, "file1c.txt"), "file1c");
+                                    Directory.CreateDirectory(Path.Combine(root, "subdira"));
+                                    File.WriteAllText(Path.Combine(root, @"subdira\file2a.txt"), "file2a");
+                                    File.WriteAllText(Path.Combine(root, @"subdira\file2b.txt"), "file2b");
+                                    File.WriteAllText(Path.Combine(root, @"subdira\file2c.txt"), "file2c");
+                                    Directory.CreateDirectory(Path.Combine(root, @"subdira\subdira-0"));
+                                    File.WriteAllText(Path.Combine(root, @"subdira\subdira-0\file3a.txt"), "file3a");
+                                    File.WriteAllText(Path.Combine(root, @"subdira\subdira-0\file3b.txt"), "file3b");
+                                    File.WriteAllText(Path.Combine(root, @"subdira\subdira-0\file3c.txt"), "file3c");
+                                    Directory.CreateDirectory(Path.Combine(root, @"subdira\subdira-0\subdirab-0"));
+                                    File.WriteAllText(Path.Combine(root, @"subdira\subdira-0\subdirab-0\file4a.txt"), "file4a");
+                                    File.WriteAllText(Path.Combine(root, @"subdira\subdira-0\subdirab-0\file4b.txt"), "file4b");
+                                    File.WriteAllText(Path.Combine(root, @"subdira\subdira-0\subdirab-0\file4c.txt"), "file4c");
+                                    Directory.CreateDirectory(Path.Combine(root, "subdirb"));
+                                    File.WriteAllText(Path.Combine(root, @"subdirb\file5a.txt"), "file5a");
+                                    File.WriteAllText(Path.Combine(root, @"subdirb\file5b.txt"), "file5b");
+                                    File.WriteAllText(Path.Combine(root, @"subdirb\file5c.txt"), "file5c");
+                                    Directory.CreateDirectory(Path.Combine(root, @"subdirb\subdirb-0"));
+                                    File.WriteAllText(Path.Combine(root, @"subdirb\subdirb-0\file6a.txt"), "file6a");
+                                    File.WriteAllText(Path.Combine(root, @"subdirb\subdirb-0\file6b.txt"), "file6b");
+                                    File.WriteAllText(Path.Combine(root, @"subdirb\subdirb-0\file6c.txt"), "file6c");
+                                    Directory.CreateDirectory(Path.Combine(root, @"subdirb\subdirb-0\subdirbb-0"));
+                                    File.WriteAllText(Path.Combine(root, @"subdirb\subdirb-0\subdirbb-0\file7a.txt"), "file7a");
+                                    File.WriteAllText(Path.Combine(root, @"subdirb\subdirb-0\subdirbb-0\file7b.txt"), "file7b");
+                                    File.WriteAllText(Path.Combine(root, @"subdirb\subdirb-0\subdirbb-0\file7c.txt"), "file7c");
+                                    Directory.CreateDirectory(Path.Combine(root, @"subdirb\subdirb-0\subdirbb-1"));
+                                    Directory.CreateDirectory(Path.Combine(root, @"subdirb\subdirb-0\subdirbb-2"));
+                                    File.WriteAllText(Path.Combine(root, @"subdirb\subdirb-0\subdirbb-2\file8a.txt"), "file8a");
+                                    Directory.CreateDirectory(Path.Combine(root, @"subdirb\subdirb-1"));
+                                    Directory.CreateDirectory(Path.Combine(root, "subdirc"));
+                                    Directory.CreateDirectory(Path.Combine(root, "subdird"));
+                                  },
+                                  "f  file1a.txt",
+                                  "f  file1b.txt",
+                                  "f  file1c.txt",
+                                  "d  subdira",
+                                  "f    file2a.txt",
+                                  "f    file2b.txt",
+                                  "f    file2c.txt",
+                                  "d    subdira-0",
+                                  "f      file3a.txt",
+                                  "f      file3b.txt",
+                                  "f      file3c.txt",
+                                  "d      subdirab-0",
+                                  "f        file4a.txt",
+                                  "f        file4b.txt",
+                                  "f        file4c.txt",
+                                  "d  subdirb",
+                                  "f    file5a.txt",
+                                  "f    file5b.txt",
+                                  "f    file5c.txt",
+                                  "d    subdirb-0",
+                                  "f      file6a.txt",
+                                  "f      file6b.txt",
+                                  "f      file6c.txt",
+                                  "d      subdirbb-0",
+                                  "f        file7a.txt",
+                                  "f        file7b.txt",
+                                  "f        file7c.txt",
+                                  "d      subdirbb-1",
+                                  "d      subdirbb-2",
+                                  "f        file8a.txt",
+                                  "d    subdirb-1",
+                                  "d  subdirc",
+                                  "d  subdird");
     }
   }
 }
