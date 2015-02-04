@@ -7,6 +7,7 @@ using Maddir.Core.Utility;
 using NUnit.Framework;
 using Snarfz.Core;
 using SupaCharge.Core.IOAbstractions;
+using Engine = Maddir.Core.TreeGeneration.Engine;
 
 namespace Maddir.IntegrationTests.Tests {
   [TestFixture]
@@ -29,7 +30,8 @@ namespace Maddir.IntegrationTests.Tests {
     [TestCaseSource("GetUsageTests")]
     public void TestUsages(Validation validation) {
       new Engine(new DotNetDirectory(), new DotNetFile()).Apply(Helper.PathInfo.TestDataDir, new Parser().Parse(validation.Markup));
-      Validate(Helper.PathInfo.TestDataDir, validation.Markup);
+      var layout = new DirectoryBrowser(Snarfzer.NewScanner()).Browse(Helper.PathInfo.TestDataDir);
+      Assert.That(new Core.MarkupGeneration.Engine(new Builder()).Apply(layout), Is.EqualTo(validation.Markup));
     }
 
     public IEnumerable GetUsageTests() {
@@ -92,11 +94,6 @@ namespace Maddir.IntegrationTests.Tests {
                                   "f          fileh.txt",
                                   "d  dirk",
                                   "f    filei.txt");
-    }
-
-    private static void Validate(string root, string expected) {
-      var layout = new DirectoryBrowser(Snarfzer.NewScanner()).Browse(root);
-      Assert.That(new MarkupGenerationEngine(new MarkupBuilder()).Apply(layout), Is.EqualTo(expected));
     }
   }
 }

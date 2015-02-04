@@ -4,8 +4,8 @@ using System;
 using Maddir.Core.Model;
 
 namespace Maddir.Core.MarkupGeneration {
-  public class MarkupGenerationEngine {
-    public MarkupGenerationEngine(IMarkupBuilder markupBuilder) {
+  public class Engine : IMarkupGenerationEngine {
+    public Engine(IMarkupBuilder markupBuilder) {
       mMarkupBuilder = markupBuilder;
     }
 

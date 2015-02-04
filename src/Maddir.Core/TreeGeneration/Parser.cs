@@ -8,7 +8,7 @@ using Maddir.Core.Commands;
 using Maddir.Core.Model;
 
 namespace Maddir.Core.TreeGeneration {
-  public class Parser {
+  public class Parser : IMarkupParser {
     public Layout Parse(string markup) {
       var map = new Dictionary<int, string> {{0, ""}};
 

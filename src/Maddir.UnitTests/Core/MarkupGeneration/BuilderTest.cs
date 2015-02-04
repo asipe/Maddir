@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace Maddir.UnitTests.Core.MarkupGeneration {
   [TestFixture]
-  public class MarkupBuilderTest : BaseTestCase {
+  public class BuilderTest : BaseTestCase {
     [Test]
     public void TestEmptyBuildGivesEmptyResult() {
       Assert.That(mBuilder.Build(), Is.Empty);
@@ -66,9 +66,9 @@ namespace Maddir.UnitTests.Core.MarkupGeneration {
 
     [SetUp]
     public void DoSetup() {
-      mBuilder = new MarkupBuilder();
+      mBuilder = new Builder();
     }
 
-    private MarkupBuilder mBuilder;
+    private Builder mBuilder;
   }
 }

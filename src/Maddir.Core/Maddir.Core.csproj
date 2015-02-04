@@ -50,9 +50,10 @@
     <Compile Include="MaddirException.cs" />
     <Compile Include="MarkupGeneration\DirectoryBrowser.cs" />
     <Compile Include="MarkupGeneration\IMarkupBuilder.cs" />
+    <Compile Include="MarkupGeneration\IMarkupGenerationEngine.cs" />
     <Compile Include="MarkupGeneration\Level.cs" />
-    <Compile Include="MarkupGeneration\MarkupBuilder.cs" />
-    <Compile Include="MarkupGeneration\MarkupGenerationEngine.cs" />
+    <Compile Include="MarkupGeneration\Builder.cs" />
+    <Compile Include="MarkupGeneration\Engine.cs" />
     <Compile Include="Model\BaseEntry.cs" />
     <Compile Include="Model\DirectoryEntry.cs" />
     <Compile Include="Model\EntryAction.cs" />
@@ -64,6 +65,8 @@
     <Compile Include="Model\Layout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TreeGeneration\Engine.cs" />
+    <Compile Include="TreeGeneration\IMarkupParser.cs" />
+    <Compile Include="TreeGeneration\ITreeGenerationEngine.cs" />
     <Compile Include="TreeGeneration\LineParser.cs" />
     <Compile Include="TreeGeneration\Parser.cs" />
     <Compile Include="Utility\StringUtils.cs" />

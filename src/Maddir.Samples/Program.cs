@@ -6,6 +6,7 @@ using Maddir.Core.MarkupGeneration;
 using Maddir.Core.TreeGeneration;
 using Snarfz.Core;
 using SupaCharge.Core.IOAbstractions;
+using Engine = Maddir.Core.TreeGeneration.Engine;
 
 namespace Maddir.Samples {
   internal class Program {
@@ -60,7 +61,7 @@ namespace Maddir.Samples {
 
       Console.WriteLine("Browsing {0}", dir);
       var layout = new DirectoryBrowser(Snarfzer.NewScanner()).Browse(dir);
-      var markup = new MarkupGenerationEngine(new MarkupBuilder()).Apply(layout);
+      var markup = new Core.MarkupGeneration.Engine(new Builder()).Apply(layout);
 
       Console.WriteLine();
       Console.WriteLine();

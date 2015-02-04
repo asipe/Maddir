@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Maddir.UnitTests.Core.MarkupGeneration {
   [TestFixture]
-  public class MarkupGenerationEngineTest : BaseTestCase {
+  public class EngineTest : BaseTestCase {
     [Test]
     public void TestApplyWithEmptyLayout() {
       mMarkupBuilder
@@ -47,10 +47,10 @@ namespace Maddir.UnitTests.Core.MarkupGeneration {
     [SetUp]
     public void DoSetup() {
       mMarkupBuilder = Mok<IMarkupBuilder>();
-      mEngine = new MarkupGenerationEngine(mMarkupBuilder.Object);
+      mEngine = new Engine(mMarkupBuilder.Object);
     }
 
-    private MarkupGenerationEngine mEngine;
+    private Engine mEngine;
     private Mock<IMarkupBuilder> mMarkupBuilder;
   }
 }

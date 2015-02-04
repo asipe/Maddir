@@ -32,7 +32,7 @@ namespace Maddir.IntegrationTests.Tests {
     public void TestUsages(Validation validation) {
       validation.Setup.Invoke(Helper.PathInfo.TestDataDir);
       var layout = new DirectoryBrowser(Snarfzer.NewScanner()).Browse(Helper.PathInfo.TestDataDir);
-      var actual = new MarkupGenerationEngine(new MarkupBuilder()).Apply(layout);
+      var actual = new Engine(new Builder()).Apply(layout);
       Assert.That(actual, Is.EqualTo(validation.Expected), actual);
     }
 

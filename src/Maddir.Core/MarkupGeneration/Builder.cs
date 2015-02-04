@@ -6,7 +6,7 @@ using Maddir.Core.Model;
 using Maddir.Core.Utility;
 
 namespace Maddir.Core.MarkupGeneration {
-  public class MarkupBuilder : IMarkupBuilder {
+  public class Builder : IMarkupBuilder {
     public string Build() {
       var lines = mEntries
         .Select(entry => new {
