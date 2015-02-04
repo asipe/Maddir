@@ -10,8 +10,7 @@ using Maddir.Core.Model;
 namespace Maddir.Core.TreeGeneration {
   public class Parser {
     public Layout Parse(string markup) {
-      var map = new Dictionary<int, string>();
-      map[0] = "";
+      var map = new Dictionary<int, string> {{0, ""}};
 
       var commands = markup
         .Split(new[] {Environment.NewLine}, StringSplitOptions.None)
