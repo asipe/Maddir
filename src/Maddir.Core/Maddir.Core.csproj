@@ -48,6 +48,7 @@
     <Compile Include="Commands\AddDirectoryCommand.cs" />
     <Compile Include="Commands\AddFileCommand.cs" />
     <Compile Include="MaddirException.cs" />
+    <Compile Include="Maddirs.cs" />
     <Compile Include="MarkupGeneration\DirectoryBrowser.cs" />
     <Compile Include="MarkupGeneration\IMarkupBuilder.cs" />
     <Compile Include="MarkupGeneration\IMarkupGenerationEngine.cs" />

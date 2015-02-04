@@ -3,10 +3,9 @@
 using System;
 using System.Collections;
 using System.IO;
-using Maddir.Core.MarkupGeneration;
+using Maddir.Core;
 using Maddir.Core.Utility;
 using NUnit.Framework;
-using Snarfz.Core;
 
 namespace Maddir.IntegrationTests.Tests {
   [TestFixture]
@@ -31,9 +30,7 @@ namespace Maddir.IntegrationTests.Tests {
     [TestCaseSource("GetUsageTests")]
     public void TestUsages(Validation validation) {
       validation.Setup.Invoke(Helper.PathInfo.TestDataDir);
-      var layout = new DirectoryBrowser(Snarfzer.NewScanner()).Browse(Helper.PathInfo.TestDataDir);
-      var actual = new Engine(new Builder()).Apply(layout);
-      Assert.That(actual, Is.EqualTo(validation.Expected), actual);
+      Assert.That(Maddirs.BuildMarkup(Helper.PathInfo.TestDataDir), Is.EqualTo(validation.Expected));
     }
 
     public IEnumerable GetUsageTests() {
