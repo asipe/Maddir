@@ -17,16 +17,9 @@ namespace Maddir.Core.TreeGeneration {
     }
 
     private void ProcessCommand(string root, ICommand command) {
-      switch (command.Entry.Type) {
-        case (EntryType.Directory):
-          ProcessDirectory(root, command.Entry);
-          break;
-        case (EntryType.File):
-          ProcessFile(root, command.Entry);
-          break;
-        default:
-          throw new Exception(string.Format("Invalid Entry Type: {0}", command.Entry));
-      }
+      new EntryAction(entry => ProcessFile(root, entry),
+                      entry => ProcessDirectory(root, entry))
+        .Execute(command.Entry);
     }
 
     private void ProcessFile(string root, IEntry entry) {
