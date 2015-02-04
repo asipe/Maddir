@@ -2,11 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using Maddir.Core.MarkupGeneration;
-using Maddir.Core.TreeGeneration;
-using Snarfz.Core;
-using SupaCharge.Core.IOAbstractions;
-using Engine = Maddir.Core.TreeGeneration.Engine;
+using Maddir.Core;
 
 namespace Maddir.Samples {
   internal class Program {
@@ -43,29 +39,20 @@ namespace Maddir.Samples {
           break;
         lines.Add(line);
       }
-
-      var markup = string.Join(Environment.NewLine, lines.ToArray());
-      var layout = new Parser().Parse(markup);
-
       Console.WriteLine();
       Console.Write("Enter Directory To Build Into: ");
       var dir = Console.ReadLine();
-
-      new Engine(new DotNetDirectory(), new DotNetFile()).Apply(dir, layout);
+      Maddirs.ApplyMarkup(dir, string.Join(Environment.NewLine, lines.ToArray()));
     }
 
     private static void Browse() {
       Console.WriteLine();
       Console.Write("Enter Directory To Browse: ");
       var dir = Console.ReadLine();
-
       Console.WriteLine("Browsing {0}", dir);
-      var layout = new DirectoryBrowser(Snarfzer.NewScanner()).Browse(dir);
-      var markup = new Core.MarkupGeneration.Engine(new Builder()).Apply(layout);
-
       Console.WriteLine();
       Console.WriteLine();
-      Console.WriteLine(markup);
+      Console.WriteLine(Maddirs.BuildMarkup(dir));
     }
   }
 }
