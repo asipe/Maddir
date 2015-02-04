@@ -15,19 +15,19 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
     [TestCase(new[] {" "}, "")]
     [TestCase(new[] {" ", "", "     "}, "")]
     public void TestEmptyMarkupGivesEmptyLayout(string[] lines, string dummy) {
-      var layout = mParser.Parse(StringUtils.ToNewLineSepString(lines));
+      var layout = _Parser.Parse(StringUtils.ToNewLineSepString(lines));
       Assert.That(layout, Are.EqualTo(new Layout()));
     }
 
     [Test]
     public void TestSingleDirectoryMarkupGivesLayout() {
-      var layout = mParser.Parse("d  dir0");
+      var layout = _Parser.Parse("d  dir0");
       Assert.That(layout, Are.EqualTo(new Layout(new AddDirectoryCommand(0, "dir0"))));
     }
 
     [Test]
     public void TestMultipleDirectoryMarkupGivesLayout() {
-      var layout = mParser.Parse(StringUtils.ToNewLineSepString("d  dir0",
+      var layout = _Parser.Parse(StringUtils.ToNewLineSepString("d  dir0",
                                                                 "d  dir1",
                                                                 "d  dir2"));
       Assert.That(layout, Are.EqualTo(new Layout(new AddDirectoryCommand(0, "dir0"),
@@ -37,13 +37,13 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
 
     [Test]
     public void TestSingleFileMarkupGivesLayout() {
-      var layout = mParser.Parse("f  file0.txt");
+      var layout = _Parser.Parse("f  file0.txt");
       Assert.That(layout, Are.EqualTo(new Layout(new AddFileCommand(0, "file0.txt"))));
     }
 
     [Test]
     public void TestMultipleFileMarkupGivesLayout() {
-      var layout = mParser.Parse(StringUtils.ToNewLineSepString("f  file0.txt",
+      var layout = _Parser.Parse(StringUtils.ToNewLineSepString("f  file0.txt",
                                                                 "f  file1.txt",
                                                                 "f  file2.txt"));
       Assert.That(layout, Are.EqualTo(new Layout(new AddFileCommand(0, "file0.txt"),
@@ -53,7 +53,7 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
 
     [Test]
     public void TestMultipleMixedMarkupGivesLayout() {
-      var layout = mParser.Parse(StringUtils.ToNewLineSepString("f  file0.txt",
+      var layout = _Parser.Parse(StringUtils.ToNewLineSepString("f  file0.txt",
                                                                 "f  file1.txt",
                                                                 "f  file2.txt",
                                                                 "d  dir0",
@@ -69,7 +69,7 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
 
     [Test]
     public void TestDirectoryTreeMarkupGivesLayout() {
-      var layout = mParser.Parse(StringUtils.ToNewLineSepString("d  dir0",
+      var layout = _Parser.Parse(StringUtils.ToNewLineSepString("d  dir0",
                                                                 "d    dir1",
                                                                 "d      dir2"));
       Assert.That(layout, Are.EqualTo(new Layout(new AddDirectoryCommand(0, "dir0"),
@@ -79,7 +79,7 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
 
     [Test]
     public void TestDirectoryTreeWithFilesMarkupGivesLayout() {
-      var layout = mParser.Parse(StringUtils.ToNewLineSepString("f  file0.txt",
+      var layout = _Parser.Parse(StringUtils.ToNewLineSepString("f  file0.txt",
                                                                 "d  dir0",
                                                                 "f    file1.txt",
                                                                 "d    dir1",
@@ -101,15 +101,10 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
     [TestCase("f", "Cannot Parse Markup: 'f'")]
     [TestCase("F  file1.txt", "Cannot Parse Markup: 'F  file1.txt'")]
     public void TestUnmatchedRegexThrowsMaddirException(string line, string expectedMessage) {
-      var ex = Assert.Throws<MaddirException>(() => mParser.Parse(line));
+      var ex = Assert.Throws<MaddirException>(() => _Parser.Parse(line));
       Assert.That(ex.Message, Is.EqualTo(expectedMessage));
     }
 
-    [SetUp]
-    public void DoSetup() {
-      mParser = new Parser();
-    }
-
-    private Parser mParser;
+    private static readonly Parser _Parser = new Parser();
   }
 }
