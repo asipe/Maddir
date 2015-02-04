@@ -1,13 +1,9 @@
 ﻿// Copyright (c) Andy Sipe. All rights reserved. Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using System.Collections;
-using Maddir.Core.MarkupGeneration;
-using Maddir.Core.TreeGeneration;
+using Maddir.Core;
 using Maddir.Core.Utility;
 using NUnit.Framework;
-using Snarfz.Core;
-using SupaCharge.Core.IOAbstractions;
-using Engine = Maddir.Core.TreeGeneration.Engine;
 
 namespace Maddir.IntegrationTests.Tests {
   [TestFixture]
@@ -29,9 +25,8 @@ namespace Maddir.IntegrationTests.Tests {
 
     [TestCaseSource("GetUsageTests")]
     public void TestUsages(Validation validation) {
-      new Engine(new DotNetDirectory(), new DotNetFile()).Apply(Helper.PathInfo.TestDataDir, new Parser().Parse(validation.Markup));
-      var layout = new DirectoryBrowser(Snarfzer.NewScanner()).Browse(Helper.PathInfo.TestDataDir);
-      Assert.That(new Core.MarkupGeneration.Engine(new Builder()).Apply(layout), Is.EqualTo(validation.Markup));
+      Maddirs.ApplyMarkup(Helper.PathInfo.TestDataDir, validation.Markup);
+      Assert.That(Maddirs.BuildMarkup(Helper.PathInfo.TestDataDir), Is.EqualTo(validation.Markup));
     }
 
     public IEnumerable GetUsageTests() {
