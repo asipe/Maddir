@@ -71,6 +71,27 @@ namespace Maddir.IntegrationTests.Tests {
                                   "f      file8.txt",
                                   "d      dir9",
                                   "f        file9.txt");
+      yield return new Validation("TestDirectoryTreeWithMultipleLevelsMarkupWithMultipleFiles",
+                                  "f  filea.txt",
+                                  "d  dira",
+                                  "d  dirb",
+                                  "f    fileb.txt",
+                                  "d    dirc",
+                                  "d    dird",
+                                  "f      filec.txt",
+                                  "f      filed.txt",
+                                  "d      dire",
+                                  "d        dirf",
+                                  "d          dirg",
+                                  "f            filee.txt",
+                                  "d          dirh",
+                                  "f            filef.txt",
+                                  "f            fileg.txt",
+                                  "d          diri",
+                                  "d        dirj",
+                                  "f          fileh.txt",
+                                  "d  dirk",
+                                  "f    filei.txt");
     }
 
     private static void Validate(string root, string expected) {
