@@ -24,10 +24,7 @@ Possible:
   
 Move nunit customizations/moq customizations out
 
-PARSERTEST
-    //TODO: invalid markup
-    //        *unknown entry type
-    //maybe a ctor for commands which takes an entry...
+maybe a ctor for commands which takes an entry...
   
 LineParser still has marker lookup replace with MType impl when done
 
