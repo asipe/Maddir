@@ -56,6 +56,7 @@
     <Compile Include="Model\BaseEntry.cs" />
     <Compile Include="Model\DirectoryEntry.cs" />
     <Compile Include="Model\EntryAction.cs" />
+    <Compile Include="Model\EntryFunc.cs" />
     <Compile Include="Model\EntryType.cs" />
     <Compile Include="Model\FileEntry.cs" />
     <Compile Include="Model\ICommand.cs" />

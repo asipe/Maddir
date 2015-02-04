@@ -23,16 +23,22 @@ namespace Maddir.Core.TreeGeneration {
     }
 
     private static ICommand ProcessLine(IDictionary<int, string> map, string line) {
-      var entry = _LineParser.Parse(line);
-
-      if (entry.Type == EntryType.File)
-        return new AddFileCommand(entry.Level,
-                                  Path.Combine(map[entry.Level], entry.Name));
-
-      var name = Path.Combine(map[entry.Level], entry.Name);
-      var command = new AddDirectoryCommand(entry.Level, name);
-      map[entry.Level + 1] = name;
+      ICommand command = null;
+      new EntryAction(entry => command = ProcessFile(map, entry),
+                      entry => command = ProcessDirectory(map, entry))
+        .Execute(_LineParser.Parse(line));
       return command;
+    }
+
+    private static ICommand ProcessDirectory(IDictionary<int, string> map, IEntry entry) {
+      var name = Path.Combine(map[entry.Level], entry.Name);
+      map[entry.Level + 1] = name;
+      return new AddDirectoryCommand(entry.Level, name);
+    }
+
+    private static ICommand ProcessFile(IDictionary<int, string> map, IEntry entry) {
+      return new AddFileCommand(entry.Level,
+                                Path.Combine(map[entry.Level], entry.Name));
     }
 
     private static readonly LineParser _LineParser = new LineParser();

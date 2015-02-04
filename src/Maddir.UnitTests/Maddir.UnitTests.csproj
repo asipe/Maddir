@@ -67,6 +67,7 @@
     <Compile Include="Core\Model\BaseEntryTest.cs" />
     <Compile Include="Core\Model\DirectoryEntryTest.cs" />
     <Compile Include="Core\Model\EntryActionTest.cs" />
+    <Compile Include="Core\Model\EntryFuncTest.cs" />
     <Compile Include="Core\Model\FileEntryTest.cs" />
     <Compile Include="Core\Model\LayoutTest.cs" />
     <Compile Include="Core\TreeGeneration\EngineTest.cs" />

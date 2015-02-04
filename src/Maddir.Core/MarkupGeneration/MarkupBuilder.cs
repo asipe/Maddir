@@ -11,7 +11,7 @@ namespace Maddir.Core.MarkupGeneration {
       var lines = mEntries
         .Select(entry => new {
                                entry.Name,
-                               Marker = GetMarker(entry),
+                               Marker = _MarkerProvider.Execute(entry),
                                Indent = GetIndent(entry)
                              })
         .Select(entry => string.Format("{0}{1}{2}", entry.Marker, new string(' ', entry.Indent), entry.Name))
@@ -25,16 +25,11 @@ namespace Maddir.Core.MarkupGeneration {
       mEntries.Add(info);
     }
 
-    private static string GetMarker(IEntry entry) {
-      return (entry.Type == EntryType.Directory)
-               ? "d"
-               : "f";
-    }
-
     private static int GetIndent(IEntry entry) {
       return (entry.Level + 1) * 2;
     }
 
     private readonly List<IEntry> mEntries = new List<IEntry>();
+    private static readonly EntryFunc<string> _MarkerProvider = new EntryFunc<string>(e => "f", e => "d");
   }
 }
