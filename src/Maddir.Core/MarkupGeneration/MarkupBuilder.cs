@@ -29,7 +29,7 @@ namespace Maddir.Core.MarkupGeneration {
       return (entry.Level + 1) * 2;
     }
 
-    private readonly List<IEntry> mEntries = new List<IEntry>();
     private static readonly EntryFunc<string> _MarkerProvider = new EntryFunc<string>(e => "f", e => "d");
+    private readonly List<IEntry> mEntries = new List<IEntry>();
   }
 }

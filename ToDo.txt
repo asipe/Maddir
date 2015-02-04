@@ -6,7 +6,6 @@ is lic header ok?
 Snarfzer
   * update to have a 4.5.1 build?
   * update copy right date
-
  
 Possible:
   * encoding of the data sep?
