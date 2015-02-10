@@ -15,8 +15,6 @@ Possible:
   * browing file props?
   
 Move nunit customizations/moq customizations out
-
 LineParser still has marker lookup replace with MType impl when done
-
 Replace EntryFunc usages with MType impl when done...
     
