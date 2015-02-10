@@ -4,6 +4,6 @@ using Maddir.Core.Model;
 
 namespace Maddir.Core.TreeGeneration {
   public interface ITreeGenerationEngine {
-    void Apply(string root, Layout layout);
+    void Apply(Settings settings, string root, Layout layout);
   }
 }

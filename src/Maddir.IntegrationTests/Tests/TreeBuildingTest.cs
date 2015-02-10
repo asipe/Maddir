@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Andy Sipe. All rights reserved. Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using System.Collections;
+using System.IO;
 using Maddir.Core;
+using Maddir.Core.Model;
 using Maddir.Core.Utility;
 using NUnit.Framework;
 
@@ -24,9 +26,25 @@ namespace Maddir.IntegrationTests.Tests {
     }
 
     [TestCaseSource("GetUsageTests")]
-    public void TestUsages(Validation validation) {
-      Maddirs.ApplyMarkup(Helper.PathInfo.TestDataDir, validation.Markup);
+    public void TestBasicUsages(Validation validation) {
+      Maddirs.ApplyMarkup(new Settings(), Helper.PathInfo.TestDataDir, validation.Markup);
       Assert.That(Maddirs.BuildMarkup(Helper.PathInfo.TestDataDir), Is.EqualTo(validation.Markup));
+    }
+
+    [Test]
+    public void TestCallbacks() {
+      var settings = new Settings();
+      settings.OnFileCreated += (sender, args) => {
+                                  using (var strm = new StreamWriter(args.Info.OpenWrite()))
+                                    strm.Write(args.Info.FullName);
+                                };
+      settings.OnDirectoryCreated += (sender, args) => args.Info.CreateSubdirectory("a");
+      Maddirs.ApplyMarkup(settings, Helper.PathInfo.TestDataDir, StringUtils.ToNewLineSepString("f  file1.txt",
+                                                                                                "d  dir1"));
+
+      var filePath = Path.Combine(Helper.PathInfo.TestDataDir, "file1.txt");
+      Assert.That(File.ReadAllText(filePath), Is.EqualTo(filePath));
+      Assert.That(Directory.Exists(Path.Combine(Helper.PathInfo.TestDataDir, @"dir1\a")), Is.True);
     }
 
     public IEnumerable GetUsageTests() {

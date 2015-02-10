@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Maddir.Core;
+using Maddir.Core.Model;
 
 namespace Maddir.Samples {
   internal class Program {
@@ -42,7 +43,14 @@ namespace Maddir.Samples {
       Console.WriteLine();
       Console.Write("Enter Directory To Build Into: ");
       var dir = Console.ReadLine();
-      Maddirs.ApplyMarkup(dir, string.Join(Environment.NewLine, lines.ToArray()));
+
+      var settings = new Settings();
+      settings
+        .OnDirectoryCreated += (sender, args) => Console.WriteLine(args.Info.FullName);
+      settings
+        .OnFileCreated += (sender, args) => Console.WriteLine(args.Info.FullName);
+
+      Maddirs.ApplyMarkup(settings, dir, string.Join(Environment.NewLine, lines.ToArray()));
     }
 
     private static void Browse() {

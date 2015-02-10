@@ -15,8 +15,7 @@ namespace Maddir.IntegrationTests.Infrastructure {
     }
 
     public void TearDown() {
-      if (_Directory.Exists(mInfo.TestWorkingDir))
-        _Directory.Delete(mInfo.TestWorkingDir, 25);
+      _Directory.Delete(mInfo.TestWorkingDir, 25);
     }
 
     private void CreateDirectories() {

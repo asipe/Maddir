@@ -2,6 +2,7 @@
 
 using System;
 using System.IO;
+using Maddir.Core.Events;
 using Maddir.Core.Model;
 using SupaCharge.Core.IOAbstractions;
 
@@ -12,24 +13,38 @@ namespace Maddir.Core.TreeGeneration {
       mFile = file;
     }
 
-    public void Apply(string root, Layout layout) {
-      Array.ForEach(layout.Commands, command => ProcessCommand(root, command));
+    public void Apply(Settings settings, string root, Layout layout) {
+      Array.ForEach(layout.Commands, command => ProcessCommand(settings, root, command));
     }
 
-    private void ProcessCommand(string root, ICommand command) {
-      new EntryAction(entry => ProcessFile(root, entry),
-                      entry => ProcessDirectory(root, entry))
+    private void ProcessCommand(Settings settings, string root, ICommand command) {
+      new EntryAction(entry => ProcessFile(settings, root, entry),
+                      entry => ProcessDirectory(settings, root, entry))
         .Execute(command.Entry);
     }
 
-    private void ProcessFile(string root, IEntry entry) {
-      mFile
-        .WriteAllText(Path.Combine(root, entry.Name), "");
+    private void ProcessFile(Settings settings, string root, IEntry entry) {
+      CreateFile(settings, Path.Combine(root, entry.Name));
     }
 
-    private void ProcessDirectory(string root, IEntry entry) {
+    private void CreateFile(Settings settings, string path) {
+      mFile
+        .WriteAllText(path, "");
+      settings
+        .Handlers
+        .HandleFileCreated(new FileCreatedEventArgs(new FileInfo(path)));
+    }
+
+    private void ProcessDirectory(Settings settings, string root, IEntry entry) {
+      CreateDirectory(settings, Path.Combine(root, entry.Name));
+    }
+
+    private void CreateDirectory(Settings settings, string path) {
       mDirectory
-        .CreateDirectory(Path.Combine(root, entry.Name));
+        .CreateDirectory(path);
+      settings
+        .Handlers
+        .HandleDirectoryCreated(new DirectoryCreatedEventArgs(new DirectoryInfo(path)));
     }
 
     private readonly IDirectory mDirectory;
