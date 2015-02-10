@@ -7,6 +7,7 @@ using Maddir.Core.Model;
 using Moq;
 using NUnit.Framework;
 using Snarfz.Core;
+using SupaCharge.Core.IOAbstractions;
 
 namespace Maddir.UnitTests.Core.MarkupGeneration {
   [TestFixture]
@@ -54,7 +55,12 @@ namespace Maddir.UnitTests.Core.MarkupGeneration {
         .Callback<Config>(config => TriggerEvents(config,
                                                   BA(""),
                                                   BA(@"c:\root\file1.txt")));
-      Assert.That(mBrowser.Browse(@"c:\root"), Are.EqualTo(new Layout(new AddFileCommand(0, "file1.txt"))));
+
+      mFile
+        .Setup(f => f.ReadAllText(@"c:\root\file1.txt"))
+        .Returns("file1");
+
+      Assert.That(mBrowser.Browse(@"c:\root"), Are.EqualTo(new Layout(new AddFileCommand(0, "file1.txt", "file1"))));
     }
 
     [Test]
@@ -66,9 +72,20 @@ namespace Maddir.UnitTests.Core.MarkupGeneration {
                                                   BA(@"c:\root\file1.txt",
                                                      @"c:\root\file2.txt",
                                                      @"c:\root\file3.txt")));
-      Assert.That(mBrowser.Browse(@"c:\root"), Are.EqualTo(new Layout(new AddFileCommand(0, "file1.txt"),
-                                                                      new AddFileCommand(0, "file2.txt"),
-                                                                      new AddFileCommand(0, "file3.txt"))));
+
+      mFile
+        .Setup(f => f.ReadAllText(@"c:\root\file1.txt"))
+        .Returns("file1");
+      mFile
+        .Setup(f => f.ReadAllText(@"c:\root\file2.txt"))
+        .Returns("file2");
+      mFile
+        .Setup(f => f.ReadAllText(@"c:\root\file3.txt"))
+        .Returns("file3");
+
+      Assert.That(mBrowser.Browse(@"c:\root"), Are.EqualTo(new Layout(new AddFileCommand(0, "file1.txt", "file1"),
+                                                                      new AddFileCommand(0, "file2.txt", "file2"),
+                                                                      new AddFileCommand(0, "file3.txt", "file3"))));
     }
 
     [Test]
@@ -87,9 +104,20 @@ namespace Maddir.UnitTests.Core.MarkupGeneration {
                                              @"c:\root\dir3"),
                                           BA<string>());
                           });
-      Assert.That(mBrowser.Browse(@"c:\root"), Are.EqualTo(new Layout(new AddFileCommand(0, "file1.txt"),
-                                                                      new AddFileCommand(0, "file2.txt"),
-                                                                      new AddFileCommand(0, "file3.txt"),
+
+      mFile
+        .Setup(f => f.ReadAllText(@"c:\root\file1.txt"))
+        .Returns("file1");
+      mFile
+        .Setup(f => f.ReadAllText(@"c:\root\file2.txt"))
+        .Returns("file2");
+      mFile
+        .Setup(f => f.ReadAllText(@"c:\root\file3.txt"))
+        .Returns("file3");
+
+      Assert.That(mBrowser.Browse(@"c:\root"), Are.EqualTo(new Layout(new AddFileCommand(0, "file1.txt", "file1"),
+                                                                      new AddFileCommand(0, "file2.txt", "file2"),
+                                                                      new AddFileCommand(0, "file3.txt", "file3"),
                                                                       new AddDirectoryCommand(0, "dir1"),
                                                                       new AddDirectoryCommand(0, "dir2"),
                                                                       new AddDirectoryCommand(0, "dir3"))));
@@ -97,8 +125,9 @@ namespace Maddir.UnitTests.Core.MarkupGeneration {
 
     [SetUp]
     public void DoSetup() {
+      mFile = Mok<IFile>();
       mScanner = Mok<IScanner>();
-      mBrowser = new DirectoryBrowser(mScanner.Object);
+      mBrowser = new DirectoryBrowser(mScanner.Object, mFile.Object);
     }
 
     private static void TriggerEvents(Config config, string[] directories, string[] files) {
@@ -108,5 +137,6 @@ namespace Maddir.UnitTests.Core.MarkupGeneration {
 
     private Mock<IScanner> mScanner;
     private DirectoryBrowser mBrowser;
+    private Mock<IFile> mFile;
   }
 }

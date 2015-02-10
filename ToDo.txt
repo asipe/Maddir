@@ -1,3 +1,12 @@
+custom file contents char
+max custom file contens when reading
+multiline file contents
+default contents when none specified
+read no contents mode
+ignore empty file contents (or leave them) modes
+
+entry.Name - named incorrectly?
+
 ILMerge Single file assembly 
 Review all 3rd party packages and fw versions
 add test to enusre lic header is added
@@ -16,5 +25,5 @@ Possible:
   
 Move nunit customizations/moq customizations out
 LineParser still has marker lookup replace with MType impl when done
-Replace EntryFunc usages with MType impl when done...
+Replace EntryFunc usages with MType impl when done...  same with _TemplateProvider/_MarkerProvider
     

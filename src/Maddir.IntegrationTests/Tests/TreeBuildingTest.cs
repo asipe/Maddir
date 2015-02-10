@@ -39,7 +39,7 @@ namespace Maddir.IntegrationTests.Tests {
                                     strm.Write(args.Info.FullName);
                                 };
       settings.OnDirectoryCreated += (sender, args) => args.Info.CreateSubdirectory("a");
-      Maddirs.ApplyMarkup(settings, Helper.PathInfo.TestDataDir, StringUtils.ToNewLineSepString("f  file1.txt",
+      Maddirs.ApplyMarkup(settings, Helper.PathInfo.TestDataDir, StringUtils.ToNewLineSepString("f  file1.txt []",
                                                                                                 "d  dir1"));
 
       var filePath = Path.Combine(Helper.PathInfo.TestDataDir, "file1.txt");
@@ -56,57 +56,57 @@ namespace Maddir.IntegrationTests.Tests {
                                   "d  dir2",
                                   "d  dir3");
       yield return new Validation("TestSingleFileMarkup",
-                                  "f  file1.txt");
+                                  "f  file1.txt [file1]");
       yield return new Validation("TestMultipleFileMarkup",
-                                  "f  file1.txt",
-                                  "f  file2.txt",
-                                  "f  file3.txt");
+                                  "f  file1.txt [file1]",
+                                  "f  file2.txt []",
+                                  "f  file3.txt [file3]");
       yield return new Validation("TestDirectoryTreeMarkup",
                                   "d  dir1",
                                   "d    dir2",
                                   "d      dir3");
       yield return new Validation("TestDirectoryTreeMarkupWithFiles",
-                                  "f  file1.txt",
+                                  "f  file1.txt []",
                                   "d  dir1",
-                                  "f    file2.txt",
+                                  "f    file2.txt []",
                                   "d    dir2",
-                                  "f      file3.txt",
+                                  "f      file3.txt []",
                                   "d      dir3",
-                                  "f        file4.txt");
+                                  "f        file4.txt [file4]");
       yield return new Validation("TestDirectoryTreeMarkupWithMultipleFiles",
-                                  "f  file1.txt",
-                                  "f  file2.txt",
-                                  "f  file3.txt",
+                                  "f  file1.txt []",
+                                  "f  file2.txt []",
+                                  "f  file3.txt []",
                                   "d  dir1",
-                                  "f    file4.txt",
-                                  "f    file5.txt",
+                                  "f    file4.txt []",
+                                  "f    file5.txt []",
                                   "d    dir2",
-                                  "f      file6.txt",
-                                  "f      file7.txt",
-                                  "f      file8.txt",
+                                  "f      file6.txt [file6]",
+                                  "f      file7.txt [file7]",
+                                  "f      file8.txt [file8]",
                                   "d      dir9",
-                                  "f        file9.txt");
+                                  "f        file9.txt []");
       yield return new Validation("TestDirectoryTreeWithMultipleLevelsMarkupWithMultipleFiles",
-                                  "f  filea.txt",
+                                  "f  filea.txt []",
                                   "d  dira",
                                   "d  dirb",
-                                  "f    fileb.txt",
+                                  "f    fileb.txt [fileb]",
                                   "d    dirc",
                                   "d    dird",
-                                  "f      filec.txt",
-                                  "f      filed.txt",
+                                  "f      filec.txt []",
+                                  "f      filed.txt []",
                                   "d      dire",
                                   "d        dirf",
                                   "d          dirg",
-                                  "f            filee.txt",
+                                  "f            filee.txt []",
                                   "d          dirh",
-                                  "f            filef.txt",
-                                  "f            fileg.txt",
+                                  "f            filef.txt [filef]",
+                                  "f            fileg.txt [fileg]",
                                   "d          diri",
                                   "d        dirj",
-                                  "f          fileh.txt",
+                                  "f          fileh.txt []",
                                   "d  dirk",
-                                  "f    filei.txt");
+                                  "f    filei.txt [filei]");
     }
   }
 }

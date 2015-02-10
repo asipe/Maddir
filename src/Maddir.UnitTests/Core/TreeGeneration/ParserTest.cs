@@ -37,31 +37,31 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
 
     [Test]
     public void TestSingleFileMarkupGivesLayout() {
-      var layout = _Parser.Parse("f  file0.txt");
-      Assert.That(layout, Are.EqualTo(new Layout(new AddFileCommand(0, "file0.txt"))));
+      var layout = _Parser.Parse("f  file0.txt []");
+      Assert.That(layout, Are.EqualTo(new Layout(new AddFileCommand(0, "file0.txt", ""))));
     }
 
     [Test]
     public void TestMultipleFileMarkupGivesLayout() {
-      var layout = _Parser.Parse(StringUtils.ToNewLineSepString("f  file0.txt",
-                                                                "f  file1.txt",
-                                                                "f  file2.txt"));
-      Assert.That(layout, Are.EqualTo(new Layout(new AddFileCommand(0, "file0.txt"),
-                                                 new AddFileCommand(0, "file1.txt"),
-                                                 new AddFileCommand(0, "file2.txt"))));
+      var layout = _Parser.Parse(StringUtils.ToNewLineSepString("f  file0.txt [0]",
+                                                                "f  file1.txt [1]",
+                                                                "f  file2.txt [2]"));
+      Assert.That(layout, Are.EqualTo(new Layout(new AddFileCommand(0, "file0.txt", "0"),
+                                                 new AddFileCommand(0, "file1.txt", "1"),
+                                                 new AddFileCommand(0, "file2.txt", "2"))));
     }
 
     [Test]
     public void TestMultipleMixedMarkupGivesLayout() {
-      var layout = _Parser.Parse(StringUtils.ToNewLineSepString("f  file0.txt",
-                                                                "f  file1.txt",
-                                                                "f  file2.txt",
+      var layout = _Parser.Parse(StringUtils.ToNewLineSepString("f  file0.txt [file0]",
+                                                                "f  file1.txt [file1]",
+                                                                "f  file2.txt [file2]",
                                                                 "d  dir0",
                                                                 "d  dir1",
                                                                 "d  dir2"));
-      Assert.That(layout, Are.EqualTo(new Layout(new AddFileCommand(0, "file0.txt"),
-                                                 new AddFileCommand(0, "file1.txt"),
-                                                 new AddFileCommand(0, "file2.txt"),
+      Assert.That(layout, Are.EqualTo(new Layout(new AddFileCommand(0, "file0.txt", "file0"),
+                                                 new AddFileCommand(0, "file1.txt", "file1"),
+                                                 new AddFileCommand(0, "file2.txt", "file2"),
                                                  new AddDirectoryCommand(0, "dir0"),
                                                  new AddDirectoryCommand(0, "dir1"),
                                                  new AddDirectoryCommand(0, "dir2"))));
@@ -79,28 +79,29 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
 
     [Test]
     public void TestDirectoryTreeWithFilesMarkupGivesLayout() {
-      var layout = _Parser.Parse(StringUtils.ToNewLineSepString("f  file0.txt",
+      var layout = _Parser.Parse(StringUtils.ToNewLineSepString("f  file0.txt []",
                                                                 "d  dir0",
-                                                                "f    file1.txt",
+                                                                "f    file1.txt [1]",
                                                                 "d    dir1",
-                                                                "f      file2.txt",
+                                                                "f      file2.txt []",
                                                                 "d      dir2",
-                                                                "f        file3.txt"));
-      Assert.That(layout, Are.EqualTo(new Layout(new AddFileCommand(0, "file0.txt"),
+                                                                "f        file3.txt [3]"));
+      Assert.That(layout, Are.EqualTo(new Layout(new AddFileCommand(0, "file0.txt", ""),
                                                  new AddDirectoryCommand(0, "dir0"),
-                                                 new AddFileCommand(1, @"dir0\file1.txt"),
+                                                 new AddFileCommand(1, @"dir0\file1.txt", "1"),
                                                  new AddDirectoryCommand(1, @"dir0\dir1"),
-                                                 new AddFileCommand(2, @"dir0\dir1\file2.txt"),
+                                                 new AddFileCommand(2, @"dir0\dir1\file2.txt", ""),
                                                  new AddDirectoryCommand(2, @"dir0\dir1\dir2"),
-                                                 new AddFileCommand(3, @"dir0\dir1\dir2\file3.txt"))));
+                                                 new AddFileCommand(3, @"dir0\dir1\dir2\file3.txt", "3"))));
     }
 
-    [TestCase("z  file1.txt", "Cannot Parse Markup: 'z  file1.txt'")]
-    [TestCase("f file1.txt", "Cannot Parse Markup: 'f file1.txt'")]
-    [TestCase("f   file1.txt", "Cannot Parse Markup: 'f   file1.txt'")]
+    [TestCase("z  file1.txt []", "Cannot Parse Markup: 'z  file1.txt []'")]
+    [TestCase("f file1.txt []", "Cannot Parse Markup: 'f file1.txt []'")]
+    [TestCase("f   file1.txt []", "Cannot Parse Markup: 'f   file1.txt []'")]
     [TestCase("f", "Cannot Parse Markup: 'f'")]
-    [TestCase("F  file1.txt", "Cannot Parse Markup: 'F  file1.txt'")]
-    public void TestUnmatchedRegexThrowsMaddirException(string line, string expectedMessage) {
+    [TestCase("F  file1.txt []", "Cannot Parse Markup: 'F  file1.txt []'")]
+    [TestCase("f  file1.txt", "Cannot Parse Markup: 'f  file1.txt'")]
+    public void TestInvalidMarkupThrows(string line, string expectedMessage) {
       var ex = Assert.Throws<MaddirException>(() => _Parser.Parse(line));
       Assert.That(ex.Message, Is.EqualTo(expectedMessage));
     }

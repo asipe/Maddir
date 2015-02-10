@@ -2,8 +2,8 @@
 
 namespace Maddir.Core.Model {
   public class EntryAction {
-    public EntryAction(Action<IEntry> onFile,
-                       Action<IEntry> onDirectory) {
+    public EntryAction(Action<FileEntry> onFile,
+                       Action<DirectoryEntry> onDirectory) {
       mOnFile = onFile;
       mOnDirectory = onDirectory;
     }
@@ -11,17 +11,17 @@ namespace Maddir.Core.Model {
     public void Execute(IEntry entry) {
       switch (entry.Type) {
         case EntryType.File:
-          mOnFile.Invoke(entry);
+          mOnFile.Invoke((FileEntry)entry);
           break;
         case EntryType.Directory:
-          mOnDirectory.Invoke(entry);
+          mOnDirectory.Invoke((DirectoryEntry)entry);
           break;
         default:
           throw new MaddirException("Unknown Command: {0}", entry.Type);
       }
     }
 
-    private readonly Action<IEntry> mOnDirectory;
-    private readonly Action<IEntry> mOnFile;
+    private readonly Action<DirectoryEntry> mOnDirectory;
+    private readonly Action<FileEntry> mOnFile;
   }
 }

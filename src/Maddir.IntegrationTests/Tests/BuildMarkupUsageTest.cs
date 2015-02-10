@@ -51,16 +51,16 @@ namespace Maddir.IntegrationTests.Tests {
                                   "d  xyz");
       yield return new Validation("TestBuildWithSingleFile",
                                   root => File.WriteAllText(Path.Combine(root, "abc.txt"), "abc"),
-                                  "f  abc.txt");
+                                  "f  abc.txt [abc]");
       yield return new Validation("TestBuildWithMutlipleFiles",
                                   root => {
                                     File.WriteAllText(Path.Combine(root, "abc.txt"), "abc");
                                     File.WriteAllText(Path.Combine(root, "def.txt"), "def");
                                     File.WriteAllText(Path.Combine(root, "xyz.txt"), "xyz");
                                   },
-                                  "f  abc.txt",
-                                  "f  def.txt",
-                                  "f  xyz.txt");
+                                  "f  abc.txt [abc]",
+                                  "f  def.txt [def]",
+                                  "f  xyz.txt [xyz]");
       yield return new Validation("TestBuildWithMutlipleMixedFilesAndDirectories",
                                   root => {
                                     Directory.CreateDirectory(Path.Combine(root, "abc"));
@@ -70,9 +70,9 @@ namespace Maddir.IntegrationTests.Tests {
                                     File.WriteAllText(Path.Combine(root, "def.txt"), "def");
                                     File.WriteAllText(Path.Combine(root, "xyz.txt"), "xyz");
                                   },
-                                  "f  abc.txt",
-                                  "f  def.txt",
-                                  "f  xyz.txt",
+                                  "f  abc.txt [abc]",
+                                  "f  def.txt [def]",
+                                  "f  xyz.txt [xyz]",
                                   "d  abc",
                                   "d  def",
                                   "d  xyz");
@@ -110,13 +110,13 @@ namespace Maddir.IntegrationTests.Tests {
                                     Directory.CreateDirectory(Path.Combine(root, @"subdira\subdira-0\subdirab-0"));
                                     File.WriteAllText(Path.Combine(root, @"subdira\subdira-0\subdirab-0\file4.txt"), "file4");
                                   },
-                                  "f  file1.txt",
+                                  "f  file1.txt [file1]",
                                   "d  subdira",
-                                  "f    file2.txt",
+                                  "f    file2.txt [file2]",
                                   "d    subdira-0",
-                                  "f      file3.txt",
+                                  "f      file3.txt [file3]",
                                   "d      subdirab-0",
-                                  "f        file4.txt");
+                                  "f        file4.txt [file4]");
       yield return new Validation("TestBuildWithDirectoryTreeWithMultipleFiles",
                                   root => {
                                     File.WriteAllText(Path.Combine(root, "file1a.txt"), "file1a");
@@ -135,21 +135,21 @@ namespace Maddir.IntegrationTests.Tests {
                                     File.WriteAllText(Path.Combine(root, @"subdira\subdira-0\subdirab-0\file4b.txt"), "file4b");
                                     File.WriteAllText(Path.Combine(root, @"subdira\subdira-0\subdirab-0\file4c.txt"), "file4c");
                                   },
-                                  "f  file1a.txt",
-                                  "f  file1b.txt",
-                                  "f  file1c.txt",
+                                  "f  file1a.txt [file1a]",
+                                  "f  file1b.txt [file1b]",
+                                  "f  file1c.txt [file1c]",
                                   "d  subdira",
-                                  "f    file2a.txt",
-                                  "f    file2b.txt",
-                                  "f    file2c.txt",
+                                  "f    file2a.txt [file2a]",
+                                  "f    file2b.txt [file2b]",
+                                  "f    file2c.txt [file2c]",
                                   "d    subdira-0",
-                                  "f      file3a.txt",
-                                  "f      file3b.txt",
-                                  "f      file3c.txt",
+                                  "f      file3a.txt [file3a]",
+                                  "f      file3b.txt [file3b]",
+                                  "f      file3c.txt [file3c]",
                                   "d      subdirab-0",
-                                  "f        file4a.txt",
-                                  "f        file4b.txt",
-                                  "f        file4c.txt");
+                                  "f        file4a.txt [file4a]",
+                                  "f        file4b.txt [file4b]",
+                                  "f        file4c.txt [file4c]");
       yield return new Validation("TestBuildWithDirectoryTreeWithMultipleLevelsWithMultipleFiles",
                                   root => {
                                     File.WriteAllText(Path.Combine(root, "file1a.txt"), "file1a");
@@ -186,36 +186,36 @@ namespace Maddir.IntegrationTests.Tests {
                                     Directory.CreateDirectory(Path.Combine(root, "subdirc"));
                                     Directory.CreateDirectory(Path.Combine(root, "subdird"));
                                   },
-                                  "f  file1a.txt",
-                                  "f  file1b.txt",
-                                  "f  file1c.txt",
+                                  "f  file1a.txt [file1a]",
+                                  "f  file1b.txt [file1b]",
+                                  "f  file1c.txt [file1c]",
                                   "d  subdira",
-                                  "f    file2a.txt",
-                                  "f    file2b.txt",
-                                  "f    file2c.txt",
+                                  "f    file2a.txt [file2a]",
+                                  "f    file2b.txt [file2b]",
+                                  "f    file2c.txt [file2c]",
                                   "d    subdira-0",
-                                  "f      file3a.txt",
-                                  "f      file3b.txt",
-                                  "f      file3c.txt",
+                                  "f      file3a.txt [file3a]",
+                                  "f      file3b.txt [file3b]",
+                                  "f      file3c.txt [file3c]",
                                   "d      subdirab-0",
-                                  "f        file4a.txt",
-                                  "f        file4b.txt",
-                                  "f        file4c.txt",
+                                  "f        file4a.txt [file4a]",
+                                  "f        file4b.txt [file4b]",
+                                  "f        file4c.txt [file4c]",
                                   "d  subdirb",
-                                  "f    file5a.txt",
-                                  "f    file5b.txt",
-                                  "f    file5c.txt",
+                                  "f    file5a.txt [file5a]",
+                                  "f    file5b.txt [file5b]",
+                                  "f    file5c.txt [file5c]",
                                   "d    subdirb-0",
-                                  "f      file6a.txt",
-                                  "f      file6b.txt",
-                                  "f      file6c.txt",
+                                  "f      file6a.txt [file6a]",
+                                  "f      file6b.txt [file6b]",
+                                  "f      file6c.txt [file6c]",
                                   "d      subdirbb-0",
-                                  "f        file7a.txt",
-                                  "f        file7b.txt",
-                                  "f        file7c.txt",
+                                  "f        file7a.txt [file7a]",
+                                  "f        file7b.txt [file7b]",
+                                  "f        file7c.txt [file7c]",
                                   "d      subdirbb-1",
                                   "d      subdirbb-2",
-                                  "f        file8a.txt",
+                                  "f        file8a.txt [file8a]",
                                   "d    subdirb-1",
                                   "d  subdirc",
                                   "d  subdird");

@@ -6,20 +6,23 @@ using Maddir.Core.Model;
 namespace Maddir.Core.TreeGeneration {
   public class LineParser {
     public IEntry Parse(string line) {
-      var match = _Pattern.Match(line);
+      var match = _FilePattern.Match(line);
+
+      if (match.Success)
+        return new FileEntry(match.Groups[2].Captures.Count - 1,
+                             match.Groups[3].Value.Trim(),
+                             match.Groups[4].Value);
+
+      match = _DirPattern.Match(line);
 
       if (!match.Success)
         throw new MaddirException("Cannot Parse Markup: '{0}'", line);
 
-      var level = match.Groups[2].Captures.Count - 1;
-      var name = match.Groups[3].Value;
-      var type = match.Groups[1].Value;
-
-      return (type == "f")
-               ? (IEntry)new FileEntry(level, name)
-               : new DirectoryEntry(level, name);
+      return new DirectoryEntry(match.Groups[2].Captures.Count - 1,
+                                match.Groups[3].Value.Trim());
     }
 
-    private static readonly Regex _Pattern = new Regex(@"^(f|d)(  )+\b(.+)$", RegexOptions.Compiled);
+    private static readonly Regex _FilePattern = new Regex(@"^(f)(  )+\b([^\[]+) \[(.*)\]$", RegexOptions.Compiled);
+    private static readonly Regex _DirPattern = new Regex(@"^(d)(  )+\b(.+)$", RegexOptions.Compiled);
   }
 }

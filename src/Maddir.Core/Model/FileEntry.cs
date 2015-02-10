@@ -2,6 +2,10 @@
 
 namespace Maddir.Core.Model {
   public class FileEntry : BaseEntry {
-    public FileEntry(int level, string name) : base(EntryType.File, level, name) {}
+    public FileEntry(int level, string name, string contents) : base(EntryType.File, level, name) {
+      Contents = contents;
+    }
+
+    public string Contents{get;set;}
   }
 }

@@ -45,7 +45,7 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
     public void TestApplyWithSingleAddFileCommand() {
       mFile
         .Setup(f => f.WriteAllText(@"c:\app1\data\file0.txt", ""));
-      mEngine.Apply(mSettings, @"c:\app1\data", new Layout(new AddFileCommand(0, "file0.txt")));
+      mEngine.Apply(mSettings, @"c:\app1\data", new Layout(new AddFileCommand(0, "file0.txt", "")));
     }
 
     [Test]
@@ -56,9 +56,9 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
         .Setup(f => f.WriteAllText(@"c:\app1\data\file1.txt", ""));
       mFile
         .Setup(f => f.WriteAllText(@"c:\app1\data\file2.txt", ""));
-      mEngine.Apply(mSettings, @"c:\app1\data", new Layout(new AddFileCommand(0, "file0.txt"),
-                                                           new AddFileCommand(0, "file1.txt"),
-                                                           new AddFileCommand(0, "file2.txt")));
+      mEngine.Apply(mSettings, @"c:\app1\data", new Layout(new AddFileCommand(0, "file0.txt", ""),
+                                                           new AddFileCommand(0, "file1.txt", ""),
+                                                           new AddFileCommand(0, "file2.txt", "")));
     }
 
     [Test]
@@ -81,9 +81,9 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
       mEngine.Apply(mSettings, @"c:\app1\data", new Layout(new AddDirectoryCommand(0, "dir0"),
                                                            new AddDirectoryCommand(0, "dir1"),
                                                            new AddDirectoryCommand(0, "dir2"),
-                                                           new AddFileCommand(0, "file0.txt"),
-                                                           new AddFileCommand(0, "file1.txt"),
-                                                           new AddFileCommand(0, "file2.txt")));
+                                                           new AddFileCommand(0, "file0.txt", ""),
+                                                           new AddFileCommand(0, "file1.txt", ""),
+                                                           new AddFileCommand(0, "file2.txt", "")));
     }
 
     [Test]
@@ -113,9 +113,9 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
       mEngine.Apply(mSettings, @"c:\app1\data", new Layout(new AddDirectoryCommand(0, "dir0"),
                                                            new AddDirectoryCommand(0, "dir1"),
                                                            new AddDirectoryCommand(0, "dir2"),
-                                                           new AddFileCommand(0, "file0.txt"),
-                                                           new AddFileCommand(0, "file1.txt"),
-                                                           new AddFileCommand(0, "file2.txt")));
+                                                           new AddFileCommand(0, "file0.txt", ""),
+                                                           new AddFileCommand(0, "file1.txt", ""),
+                                                           new AddFileCommand(0, "file2.txt", "")));
 
       Assert.That(seen, Is.EqualTo(BA(@"c:\app1\data\dir0",
                                       @"c:\app1\data\dir1",

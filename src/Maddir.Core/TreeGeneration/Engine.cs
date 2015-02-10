@@ -23,13 +23,13 @@ namespace Maddir.Core.TreeGeneration {
         .Execute(command.Entry);
     }
 
-    private void ProcessFile(Settings settings, string root, IEntry entry) {
-      CreateFile(settings, Path.Combine(root, entry.Name));
+    private void ProcessFile(Settings settings, string root, FileEntry entry) {
+      CreateFile(settings, Path.Combine(root, entry.Name), entry.Contents);
     }
 
-    private void CreateFile(Settings settings, string path) {
+    private void CreateFile(Settings settings, string path, string contents) {
       mFile
-        .WriteAllText(path, "");
+        .WriteAllText(path, contents);
       settings
         .Handlers
         .HandleFileCreated(new FileCreatedEventArgs(new FileInfo(path)));

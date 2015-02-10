@@ -35,9 +35,10 @@ namespace Maddir.Core.TreeGeneration {
       return new AddDirectoryCommand(entry.Level, name);
     }
 
-    private static ICommand ProcessFile(IDictionary<int, string> map, IEntry entry) {
+    private static ICommand ProcessFile(IDictionary<int, string> map, FileEntry entry) {
       return new AddFileCommand(entry.Level,
-                                Path.Combine(map[entry.Level], entry.Name));
+                                Path.Combine(map[entry.Level], entry.Name),
+                                entry.Contents);
     }
 
     private static readonly LineParser _LineParser = new LineParser();

@@ -6,11 +6,13 @@ using System.Linq;
 using Maddir.Core.Commands;
 using Maddir.Core.Model;
 using Snarfz.Core;
+using SupaCharge.Core.IOAbstractions;
 
 namespace Maddir.Core.MarkupGeneration {
   public class DirectoryBrowser {
-    public DirectoryBrowser(IScanner scanner) {
+    public DirectoryBrowser(IScanner scanner, IFile file) {
       mScanner = scanner;
+      mFile = file;
     }
 
     public Layout Browse(string root) {
@@ -21,36 +23,37 @@ namespace Maddir.Core.MarkupGeneration {
                                       ScanErrorMode = ScanErrorMode.Throw
                                     };
       var count = 0;
-      config.OnDirectory += (o, a) => ProcessDirectory(commands, level, a, ref count);
-      config.OnFile += (o, a) => ProcessFile(commands, level, a);
+      config.OnDirectory += (o, a) => ProcessDirectory(commands, level, a.Path, ref count);
+      config.OnFile += (o, a) => ProcessFile(commands, level, a.Path);
       mScanner.Start(config);
       return new Layout(commands.ToArray());
     }
 
-    private static void ProcessFile(ICollection<ICommand> commands, Level level, BaseVisitEventArgs args) {
+    private void ProcessFile(ICollection<ICommand> commands, Level level, string path) {
       commands
-        .Add(new AddFileCommand(level.GetForPath(args.Path),
-                                Path.GetFileName(args.Path)));
+        .Add(new AddFileCommand(level.GetForPath(path),
+                                Path.GetFileName(path),
+                                mFile.ReadAllText(path)));
     }
 
-    private static void ProcessDirectory(ICollection<ICommand> commands, Level level, BaseVisitEventArgs args, ref int count) {
+    private static void ProcessDirectory(ICollection<ICommand> commands, Level level, string path, ref int count) {
       if (count == 0) {
         ++count;
         return;
       }
 
       commands
-        .Add(new AddDirectoryCommand(level.GetForPath(args.Path),
-                                     ExtractDirectoryName(args)));
+        .Add(new AddDirectoryCommand(level.GetForPath(path),
+                                     ExtractDirectoryName(path)));
     }
 
-    private static string ExtractDirectoryName(BaseVisitEventArgs args) {
-      return args
-        .Path
+    private static string ExtractDirectoryName(string path) {
+      return path
         .Split(Path.DirectorySeparatorChar)
         .Last();
     }
 
+    private readonly IFile mFile;
     private readonly IScanner mScanner;
   }
 }

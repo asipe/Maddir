@@ -11,7 +11,7 @@ namespace Maddir.Core {
   public static class Maddirs {
     public static string BuildMarkup(string path) {
       return new Engine(new Builder())
-        .Apply(new DirectoryBrowser(Snarfzer.NewScanner()).Browse(path));
+        .Apply(new DirectoryBrowser(Snarfzer.NewScanner(), new DotNetFile()).Browse(path));
     }
 
     public static void ApplyMarkup(Settings settings, string path, string markup) {

@@ -8,10 +8,11 @@ namespace Maddir.UnitTests.Core.Model {
   public class FileEntryTest : BaseTestCase {
     [Test]
     public void TestDefaults() {
-      var entry = new FileEntry(0, "aname");
+      var entry = new FileEntry(0, "aname", "contents");
       Assert.That(entry.Type, Is.EqualTo(EntryType.File));
       Assert.That(entry.Level, Is.EqualTo(0));
       Assert.That(entry.Name, Is.EqualTo("aname"));
+      Assert.That(entry.Contents, Is.EqualTo("contents"));
     }
   }
 }

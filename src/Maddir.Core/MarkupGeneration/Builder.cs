@@ -9,12 +9,7 @@ namespace Maddir.Core.MarkupGeneration {
   public class Builder : IMarkupBuilder {
     public string Build() {
       var lines = mEntries
-        .Select(entry => new {
-                               entry.Name,
-                               Marker = _MarkerProvider.Execute(entry),
-                               Indent = GetIndent(entry)
-                             })
-        .Select(entry => string.Format("{0}{1}{2}", entry.Marker, new string(' ', entry.Indent), entry.Name))
+        .Select(entry => _RowProvider.Execute(entry))
         .ToArray();
 
       return StringUtils
@@ -29,7 +24,9 @@ namespace Maddir.Core.MarkupGeneration {
       return (entry.Level + 1) * 2;
     }
 
-    private static readonly EntryFunc<string> _MarkerProvider = new EntryFunc<string>(e => "f", e => "d");
+    private static readonly EntryFunc<string> _RowProvider = new EntryFunc<string>(e => string.Format("f{0}{1} [{2}]", new string(' ', GetIndent(e)), e.Name, e.Contents),
+                                                                                   e => string.Format("d{0}{1}", new string(' ', GetIndent(e)), e.Name));
+
     private readonly List<IEntry> mEntries = new List<IEntry>();
   }
 }
