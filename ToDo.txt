@@ -1,20 +1,11 @@
-custom file contents char
-max custom file contens when reading
-multiline file contents
-default contents when none specified
-read no contents mode
-ignore empty file contents (or leave them) modes
-
-entry.Name - named incorrectly?
-
-ILMerge Single file assembly 
 Review all 3rd party packages and fw versions
-add test to enusre lic header is added
+add test to ensure lic header is added
 is lic header ok?
 
 Snarfzer
   * update to have a 4.5.1 build?
   * update copy right date
+  * unmerge?
  
 Possible:
   * encoding of the data sep?
@@ -22,6 +13,12 @@ Possible:
   * when browsing should all data be read or ?
   * multiline data?
   * browing file props?
+  * custom file contents char
+  * max custom file contents when reading
+  * multiline file contents
+  * default contents when none specified
+  * read no contents mode
+  * ignore empty file contents (or leave them) modes
   
 Move nunit customizations/moq customizations out
 LineParser still has marker lookup replace with MType impl when done
