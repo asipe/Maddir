@@ -22,7 +22,7 @@ namespace Maddir.UnitTests.Core.Model {
       mSettings
         .OnDirectoryCreated += (sender, args) => {
                                  Assert.That(args, Are.EqualTo(original));
-                                 Assert.That(sender, Is.Null);
+                                 Assert.That(sender, Is.SameAs(mSettings.Handlers));
                                  ++count;
                                };
       mSettings
@@ -37,7 +37,7 @@ namespace Maddir.UnitTests.Core.Model {
       var original = new DirectoryCreatedEventArgs(null);
       EventHandler<DirectoryCreatedEventArgs> evt = (sender, args) => {
                                                       Assert.That(args, Are.EqualTo(original));
-                                                      Assert.That(sender, Is.Null);
+                                                      Assert.That(sender, Is.SameAs(mSettings.Handlers));
                                                       ++count;
                                                     };
       mSettings
@@ -66,7 +66,7 @@ namespace Maddir.UnitTests.Core.Model {
       mSettings
         .OnFileCreated += (sender, args) => {
                             Assert.That(args, Are.EqualTo(original));
-                            Assert.That(sender, Is.Null);
+                            Assert.That(sender, Is.SameAs(mSettings.Handlers));
                             ++count;
                           };
       mSettings
@@ -81,7 +81,7 @@ namespace Maddir.UnitTests.Core.Model {
       var original = new FileCreatedEventArgs(null);
       EventHandler<FileCreatedEventArgs> evt = (sender, args) => {
                                                  Assert.That(args, Are.EqualTo(original));
-                                                 Assert.That(sender, Is.Null);
+                                                 Assert.That(sender, Is.SameAs(mSettings.Handlers));
                                                  ++count;
                                                };
       mSettings

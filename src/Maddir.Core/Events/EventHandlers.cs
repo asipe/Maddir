@@ -8,11 +8,11 @@ namespace Maddir.Core.Events {
     public event EventHandler<FileCreatedEventArgs> OnFileCreated;
 
     public void HandleDirectoryCreated(DirectoryCreatedEventArgs args) {
-      OnDirectoryCreated.RaiseEvent(null, args);
+      OnDirectoryCreated.RaiseEvent(this, args);
     }
 
     public void HandleFileCreated(FileCreatedEventArgs args) {
-      OnFileCreated.RaiseEvent(null, args);
+      OnFileCreated.RaiseEvent(this, args);
     }
   }
 }

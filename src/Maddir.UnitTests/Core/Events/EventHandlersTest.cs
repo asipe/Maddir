@@ -19,7 +19,7 @@ namespace Maddir.UnitTests.Core.Events {
       mHandlers
         .OnDirectoryCreated += (sender, args) => {
                                  Assert.That(args, Are.EqualTo(original));
-                                 Assert.That(sender, Is.Null);
+                                 Assert.That(sender, Is.SameAs(mHandlers));
                                  ++count;
                                };
       mHandlers.HandleDirectoryCreated(original);
@@ -32,7 +32,7 @@ namespace Maddir.UnitTests.Core.Events {
       var original = new DirectoryCreatedEventArgs(null);
       EventHandler<DirectoryCreatedEventArgs> evt = (sender, args) => {
                                                       Assert.That(args, Are.EqualTo(original));
-                                                      Assert.That(sender, Is.Null);
+                                                      Assert.That(sender, Is.SameAs(mHandlers));
                                                       ++count;
                                                     };
       mHandlers
@@ -57,7 +57,7 @@ namespace Maddir.UnitTests.Core.Events {
       mHandlers
         .OnFileCreated += (sender, args) => {
                             Assert.That(args, Are.EqualTo(original));
-                            Assert.That(sender, Is.Null);
+                            Assert.That(sender, Is.SameAs(mHandlers));
                             ++count;
                           };
       mHandlers.HandleFileCreated(original);
@@ -70,7 +70,7 @@ namespace Maddir.UnitTests.Core.Events {
       var original = new FileCreatedEventArgs(null);
       EventHandler<FileCreatedEventArgs> evt = (sender, args) => {
                                                  Assert.That(args, Are.EqualTo(original));
-                                                 Assert.That(sender, Is.Null);
+                                                 Assert.That(sender, Is.SameAs(mHandlers));
                                                  ++count;
                                                };
       mHandlers
