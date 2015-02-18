@@ -1,15 +1,17 @@
 ﻿// Copyright (c) Andy Sipe. All rights reserved. Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using Maddir.Core;
 using Maddir.Core.Model;
+using SupaCharge.Core.IOAbstractions;
 
 namespace Maddir.Samples {
   internal class Program {
-    private static int Main(string[] args) {
+    private static int Main() {
       try {
-        Execute(args);
+        Execute2();
         return 0;
       } catch (Exception e) {
         Console.WriteLine(e);
@@ -17,50 +19,59 @@ namespace Maddir.Samples {
       return 1;
     }
 
-    private static void Execute(params string[] args) {
-      switch (args[0]) {
-        case "browse":
-          Browse();
-          break;
-        case "build":
-          Build();
-          break;
-        default:
-          throw new Exception(string.Format("Unknown command: {0}", args[0]));
-      }
-    }
+    private static void Execute2() {
+      var workingDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "test");
+      Console.WriteLine("Working Directory is {0}", workingDir);
+      Console.Write("Continue (Y|N): ");
+      if (Console.ReadLine() != "Y")
+        return;
 
-    private static void Build() {
-      Console.WriteLine();
-      Console.WriteLine("Enter Markup: ");
-      var lines = new List<string>();
-      while (true) {
-        var line = Console.ReadLine();
-        if (line == "")
-          break;
-        lines.Add(line);
-      }
-      Console.WriteLine();
-      Console.Write("Enter Directory To Build Into: ");
-      var dir = Console.ReadLine();
+      if (Directory.Exists(workingDir))
+        new DotNetDirectory().Delete(workingDir, 250);
 
+      Directory.CreateDirectory(workingDir);
+
+      //create a single directory with a single file
+      var markup = @"
+d  single
+f    file1.txt [file1.txt contents]".Trim();
+      Maddirs.ApplyMarkup(new Settings(), workingDir, markup);
+
+      //create a directory tree
+      markup = @"
+d  tree
+d    directory1
+d      directory2
+d        directory 3
+f          file1.txt [file1.txt contents]".Trim();
+      Maddirs.ApplyMarkup(new Settings(), workingDir, markup);
+
+      //create a directory tree with all file contents specified by callbacks
+      markup = @"
+d  callback1
+d    directory1
+f      file1.txt []
+d      directory2
+f        file2.txt []
+d        directory 3
+f          file3.txt []
+f          file4.txt []".Trim();
       var settings = new Settings();
-      settings
-        .OnDirectoryCreated += (sender, args) => Console.WriteLine(args.Info.FullName);
-      settings
-        .OnFileCreated += (sender, args) => Console.WriteLine(args.Info.FullName);
+      settings.OnFileCreated += (sender, args) => File.WriteAllText(args.Info.FullName, "sample text");
+      Maddirs.ApplyMarkup(settings, workingDir, markup);
 
-      Maddirs.ApplyMarkup(settings, dir, string.Join(Environment.NewLine, lines.ToArray()));
-    }
+      //create a directory tree with directory contens specified by callbacks
+      markup = @"
+d  callback2
+d    directory1
+d      directory2
+d        directory 3".Trim();
+      settings = new Settings();
+      settings.OnDirectoryCreated += (sender, args) => File.WriteAllText(Path.Combine(args.Info.FullName, "file.txt"), "data");
+      Maddirs.ApplyMarkup(settings, workingDir, markup);
 
-    private static void Browse() {
-      Console.WriteLine();
-      Console.Write("Enter Directory To Browse: ");
-      var dir = Console.ReadLine();
-      Console.WriteLine("Browsing {0}", dir);
-      Console.WriteLine();
-      Console.WriteLine();
-      Console.WriteLine(Maddirs.BuildMarkup(dir));
+      //generate markup for out test directories
+      Console.WriteLine(Maddirs.BuildMarkup(workingDir));
     }
   }
 }
