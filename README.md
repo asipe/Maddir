@@ -37,7 +37,7 @@ f          file4.txt []".Trim();
       settings.OnFileCreated += (sender, args) => File.WriteAllText(args.Info.FullName, "sample text");
       Maddirs.ApplyMarkup(settings, workingDir, markup);
 
-      //create a directory tree with directory contens specified by callbacks
+      //create a directory tree with directory contents specified by callbacks
       markup = @"
 d  callback2
 d    directory1
