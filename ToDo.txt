@@ -1,19 +1,19 @@
 Review all 3rd party packages and fw versions
-add test to ensure lic header is added
-is lic header ok?
+Add test to ensure lic header is added
+Is lic header ok?
 
 Snarfzer
   * update to have a 4.5.1 build?
   * update copy right date
-  * unmerge?
+  
+Before release:
+  * multiline file contents
  
 Possible:
   * encoding of the data sep?
   * custom markup chars?
   * when browsing should all data be read or ?
-  * multiline data?
-  * browing file props?
-  * custom file contents char
+  * browsing file props?
   * max custom file contents when reading
   * multiline file contents
   * default contents when none specified
