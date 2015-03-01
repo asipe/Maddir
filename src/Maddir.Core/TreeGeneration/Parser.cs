@@ -9,6 +9,10 @@ using Maddir.Core.Model;
 
 namespace Maddir.Core.TreeGeneration {
   public class Parser : IMarkupParser {
+    public Parser(Settings settings) {
+      mLineParser = new LineParser(settings);
+    }
+
     public Layout Parse(string markup) {
       var map = new Dictionary<int, string> {{0, ""}};
 
@@ -21,11 +25,11 @@ namespace Maddir.Core.TreeGeneration {
       return new Layout(commands);
     }
 
-    private static ICommand ProcessLine(IDictionary<int, string> map, string line) {
+    private ICommand ProcessLine(IDictionary<int, string> map, string line) {
       ICommand command = null;
       new EntryAction(entry => command = ProcessFile(map, entry),
                       entry => command = ProcessDirectory(map, entry))
-        .Execute(_LineParser.Parse(line));
+        .Execute(mLineParser.Parse(line));
       return command;
     }
 
@@ -41,6 +45,6 @@ namespace Maddir.Core.TreeGeneration {
                                 entry.Contents);
     }
 
-    private static readonly LineParser _LineParser = new LineParser();
+    private readonly LineParser mLineParser;
   }
 }

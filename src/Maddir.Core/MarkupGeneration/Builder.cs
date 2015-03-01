@@ -7,9 +7,21 @@ using Maddir.Core.Utility;
 
 namespace Maddir.Core.MarkupGeneration {
   public class Builder : IMarkupBuilder {
+    public Builder(Settings settings) {
+      mRowProvider = new EntryFunc<string>(e => string.Format("f{0}{1} {2}{3}{4}",
+                                                              new string(' ', GetIndent(e)),
+                                                              e.Name,
+                                                              settings.ContentStartDelimiter,
+                                                              e.Contents,
+                                                              settings.ContentEndDelimiter),
+                                           e => string.Format("d{0}{1}",
+                                                              new string(' ', GetIndent(e)),
+                                                              e.Name));
+    }
+
     public string Build() {
       var lines = mEntries
-        .Select(entry => _RowProvider.Execute(entry))
+        .Select(entry => mRowProvider.Execute(entry))
         .ToArray();
 
       return StringUtils
@@ -24,9 +36,7 @@ namespace Maddir.Core.MarkupGeneration {
       return (entry.Level + 1) * 2;
     }
 
-    private static readonly EntryFunc<string> _RowProvider = new EntryFunc<string>(e => string.Format("f{0}{1} [{2}]", new string(' ', GetIndent(e)), e.Name, e.Contents),
-                                                                                   e => string.Format("d{0}{1}", new string(' ', GetIndent(e)), e.Name));
-
     private readonly List<IEntry> mEntries = new List<IEntry>();
+    private readonly EntryFunc<string> mRowProvider;
   }
 }

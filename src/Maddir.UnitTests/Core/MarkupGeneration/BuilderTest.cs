@@ -26,6 +26,14 @@ namespace Maddir.UnitTests.Core.MarkupGeneration {
     }
 
     [Test]
+    public void TestAddSingleFileWithCustomSingleCharDelimiters() {
+      mSettings.ContentStartDelimiter = '|';
+      mSettings.ContentEndDelimiter = '|';
+      mBuilder.Add(new FileEntry(0, "file1.txt", ""));
+      Assert.That(mBuilder.Build(), Is.EqualTo("f  file1.txt ||"));
+    }
+
+    [Test]
     public void TestAddSingleDirectoryAndSingleFile() {
       mBuilder.Add(new DirectoryEntry(0, "root"));
       mBuilder.Add(new FileEntry(0, "file1.txt", ""));
@@ -60,15 +68,16 @@ namespace Maddir.UnitTests.Core.MarkupGeneration {
                                                             "f            subdiraaaa3file1.txt []",
                                                             "d    subdira2",
                                                             "f      subdira2file1.txt []",
-                                                            "f      subdira2file2.txt []"
-                               )));
+                                                            "f      subdira2file2.txt []")));
     }
 
     [SetUp]
     public void DoSetup() {
-      mBuilder = new Builder();
+      mSettings = new Settings();
+      mBuilder = new Builder(mSettings);
     }
 
     private Builder mBuilder;
+    private Settings mSettings;
   }
 }

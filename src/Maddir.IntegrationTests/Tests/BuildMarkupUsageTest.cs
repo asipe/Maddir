@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.IO;
 using Maddir.Core;
+using Maddir.Core.Model;
 using Maddir.Core.Utility;
 using NUnit.Framework;
 
@@ -30,7 +31,7 @@ namespace Maddir.IntegrationTests.Tests {
     [TestCaseSource("GetUsageTests")]
     public void TestUsages(Validation validation) {
       validation.Setup.Invoke(Helper.PathInfo.TestDataDir);
-      Assert.That(Maddirs.BuildMarkup(Helper.PathInfo.TestDataDir), Is.EqualTo(validation.Expected));
+      Assert.That(Maddirs.BuildMarkup(new Settings(), Helper.PathInfo.TestDataDir), Is.EqualTo(validation.Expected));
     }
 
     public IEnumerable GetUsageTests() {

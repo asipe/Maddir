@@ -9,14 +9,14 @@ using Engine = Maddir.Core.MarkupGeneration.Engine;
 
 namespace Maddir.Core {
   public static class Maddirs {
-    public static string BuildMarkup(string path) {
-      return new Engine(new Builder())
+    public static string BuildMarkup(Settings settings, string path) {
+      return new Engine(new Builder(settings))
         .Apply(new DirectoryBrowser(Snarfzer.NewScanner(), new DotNetFile()).Browse(path));
     }
 
     public static void ApplyMarkup(Settings settings, string path, string markup) {
       new TreeGeneration.Engine(new DotNetDirectory(), new DotNetFile())
-        .Apply(settings, path, new Parser().Parse(markup));
+        .Apply(settings, path, new Parser(settings).Parse(markup));
     }
   }
 }

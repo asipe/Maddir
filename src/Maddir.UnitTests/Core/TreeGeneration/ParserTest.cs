@@ -106,6 +106,6 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
       Assert.That(ex.Message, Is.EqualTo(expectedMessage));
     }
 
-    private static readonly Parser _Parser = new Parser();
+    private static readonly Parser _Parser = new Parser(new Settings());
   }
 }

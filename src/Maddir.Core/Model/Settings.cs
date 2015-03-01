@@ -7,9 +7,13 @@ namespace Maddir.Core.Model {
   public class Settings {
     public Settings() {
       Handlers = new EventHandlers();
+      ContentStartDelimiter = '[';
+      ContentEndDelimiter = ']';
     }
 
     public EventHandlers Handlers{get;private set;}
+    public char ContentStartDelimiter{get;set;}
+    public char ContentEndDelimiter{get;set;}
 
     public event EventHandler<DirectoryCreatedEventArgs> OnDirectoryCreated {
       add {Handlers.OnDirectoryCreated += value;}

@@ -30,7 +30,7 @@ namespace Maddir.IntegrationTests.Tests {
     [TestCaseSource("GetUsageTests")]
     public void TestBasicUsages(Validation validation) {
       Maddirs.ApplyMarkup(validation.Settings, Helper.PathInfo.TestDataDir, validation.Markup);
-      Assert.That(Maddirs.BuildMarkup(Helper.PathInfo.TestDataDir), Is.EqualTo(validation.Markup));
+      Assert.That(Maddirs.BuildMarkup(validation.Settings, Helper.PathInfo.TestDataDir), Is.EqualTo(validation.Markup));
     }
 
     [Test]
@@ -63,6 +63,12 @@ namespace Maddir.IntegrationTests.Tests {
       yield return new Validation("TestSingleFileMarkup",
                                   new Settings(),
                                   "f  file1.txt [file1]");
+      yield return new Validation("TestSingleFileMarkupWithSingleCharCustomContentDelimiters",
+                                  new Settings {
+                                                 ContentStartDelimiter = '<',
+                                                 ContentEndDelimiter = '>'
+                                               },
+                                  "f  file1.txt <file1>");
       yield return new Validation("TestMultipleFileMarkup",
                                   new Settings(),
                                   "f  file1.txt [file1]",

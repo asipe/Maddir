@@ -9,6 +9,12 @@ namespace Maddir.UnitTests.Core.Model {
   [TestFixture]
   public class SettingsTest : BaseTestCase {
     [Test]
+    public void TestDefaults() {
+      Assert.That(mSettings.ContentStartDelimiter, Is.EqualTo('['));
+      Assert.That(mSettings.ContentEndDelimiter, Is.EqualTo(']'));
+    }
+
+    [Test]
     public void TestDefaultHasNoDirectoryHandlersRegistered() {
       mSettings
         .Handlers
