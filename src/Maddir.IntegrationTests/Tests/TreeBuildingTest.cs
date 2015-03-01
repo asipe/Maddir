@@ -11,14 +11,16 @@ namespace Maddir.IntegrationTests.Tests {
   [TestFixture]
   public class TreeBuildingTest : BaseTestCase {
     public sealed class Validation {
-      public Validation(string testName, params string[] expected) {
+      public Validation(string testName, Settings settings, params string[] expected) {
         TestName = testName;
+        Settings = settings;
         Markup = StringUtils
           .ToNewLineSepString(expected);
       }
 
       public string TestName{get;private set;}
       public string Markup{get;private set;}
+      public Settings Settings{get;set;}
 
       public override string ToString() {
         return TestName;
@@ -27,7 +29,7 @@ namespace Maddir.IntegrationTests.Tests {
 
     [TestCaseSource("GetUsageTests")]
     public void TestBasicUsages(Validation validation) {
-      Maddirs.ApplyMarkup(new Settings(), Helper.PathInfo.TestDataDir, validation.Markup);
+      Maddirs.ApplyMarkup(validation.Settings, Helper.PathInfo.TestDataDir, validation.Markup);
       Assert.That(Maddirs.BuildMarkup(Helper.PathInfo.TestDataDir), Is.EqualTo(validation.Markup));
     }
 
@@ -48,24 +50,31 @@ namespace Maddir.IntegrationTests.Tests {
     }
 
     public IEnumerable GetUsageTests() {
-      yield return new Validation("TestEmptyMarkupGivesNoDirectoriesOrFiles");
+      yield return new Validation("TestEmptyMarkupGivesNoDirectoriesOrFiles",
+                                  new Settings());
       yield return new Validation("TestSingleDirectoryMarkup",
+                                  new Settings(),
                                   "d  dir1");
       yield return new Validation("TestMultipleDirectoryMarkup",
+                                  new Settings(),
                                   "d  dir1",
                                   "d  dir2",
                                   "d  dir3");
       yield return new Validation("TestSingleFileMarkup",
+                                  new Settings(),
                                   "f  file1.txt [file1]");
       yield return new Validation("TestMultipleFileMarkup",
+                                  new Settings(),
                                   "f  file1.txt [file1]",
                                   "f  file2.txt []",
                                   "f  file3.txt [file3]");
       yield return new Validation("TestDirectoryTreeMarkup",
+                                  new Settings(),
                                   "d  dir1",
                                   "d    dir2",
                                   "d      dir3");
       yield return new Validation("TestDirectoryTreeMarkupWithFiles",
+                                  new Settings(),
                                   "f  file1.txt []",
                                   "d  dir1",
                                   "f    file2.txt []",
@@ -74,6 +83,7 @@ namespace Maddir.IntegrationTests.Tests {
                                   "d      dir3",
                                   "f        file4.txt [file4]");
       yield return new Validation("TestDirectoryTreeMarkupWithMultipleFiles",
+                                  new Settings(),
                                   "f  file1.txt []",
                                   "f  file2.txt []",
                                   "f  file3.txt []",
@@ -87,6 +97,7 @@ namespace Maddir.IntegrationTests.Tests {
                                   "d      dir9",
                                   "f        file9.txt []");
       yield return new Validation("TestDirectoryTreeWithMultipleLevelsMarkupWithMultipleFiles",
+                                  new Settings(),
                                   "f  filea.txt []",
                                   "d  dira",
                                   "d  dirb",
