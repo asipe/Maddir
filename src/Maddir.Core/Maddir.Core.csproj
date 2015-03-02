@@ -75,6 +75,7 @@
     <Compile Include="TreeGeneration\ITreeGenerationEngine.cs" />
     <Compile Include="TreeGeneration\LineParser.cs" />
     <Compile Include="TreeGeneration\Parser.cs" />
+    <Compile Include="TreeGeneration\Splitter.cs" />
     <Compile Include="Utility\StringUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
