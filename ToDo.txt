@@ -8,6 +8,8 @@ Snarfzer
   
 Before release:
   * multiline file contents
+  * move samples down a level and into own solution 
+  * nuget specs 
  
 Possible:
   * encoding of the data sep?
