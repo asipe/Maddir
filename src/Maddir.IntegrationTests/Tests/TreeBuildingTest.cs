@@ -124,6 +124,26 @@ namespace Maddir.IntegrationTests.Tests {
                                   "f          fileh.txt []",
                                   "d  dirk",
                                   "f    filei.txt [filei]");
+      yield return new Validation("TestSingleFileWithMultipleLineContentsMarkup",
+                                  new Settings(),
+                                  "f  file1.txt [file1",
+                                  "contents]");
+      yield return new Validation("TestSingleFileWithJsonContentsMarkup",
+                                  new Settings {
+                                                 ContentStartDelimiter = '|',
+                                                 ContentEndDelimiter = '|'
+                                               },
+                                  "f  file1.txt |",
+                                  "{",
+                                  "  \"name\": \"bob\"", 
+                                  "  \"age\": 15",
+                                  "  \"values\": [",
+                                  "    1",
+                                  "    2",
+                                  "    3",
+                                  "  ]",
+                                  "}",
+                                  "|");
     }
   }
 }
