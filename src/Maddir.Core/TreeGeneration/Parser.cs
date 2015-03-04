@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Andy Sipe. All rights reserved. Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,26 +9,22 @@ using Maddir.Core.Model;
 namespace Maddir.Core.TreeGeneration {
   public class Parser : IMarkupParser {
     public Parser(Settings settings) {
-      mLineParser = new LineParser(settings);
+      mSplitter = new Splitter(settings);
     }
 
     public Layout Parse(string markup) {
       var map = new Dictionary<int, string> {{0, ""}};
-
-      var commands = markup
-        .Split(new[] {Environment.NewLine}, StringSplitOptions.None)
-        .Select(line => line.Trim())
-        .Where(line => line.Length > 0)
-        .Select(line => ProcessLine(map, line))
-        .ToArray();
-      return new Layout(commands);
+      return new Layout(mSplitter
+                          .Split(markup)
+                          .Select(entry => ProcessLine(map, entry))
+                          .ToArray());
     }
 
-    private ICommand ProcessLine(IDictionary<int, string> map, string line) {
+    private static ICommand ProcessLine(IDictionary<int, string> map, IEntry entry) {
       ICommand command = null;
-      new EntryAction(entry => command = ProcessFile(map, entry),
-                      entry => command = ProcessDirectory(map, entry))
-        .Execute(mLineParser.Parse(line));
+      new EntryAction(ety => command = ProcessFile(map, ety),
+                      ety => command = ProcessDirectory(map, ety))
+        .Execute(entry);
       return command;
     }
 
@@ -45,6 +40,6 @@ namespace Maddir.Core.TreeGeneration {
                                 entry.Contents);
     }
 
-    private readonly LineParser mLineParser;
+    private readonly Splitter mSplitter;
   }
 }

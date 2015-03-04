@@ -73,7 +73,6 @@
     <Compile Include="TreeGeneration\Engine.cs" />
     <Compile Include="TreeGeneration\IMarkupParser.cs" />
     <Compile Include="TreeGeneration\ITreeGenerationEngine.cs" />
-    <Compile Include="TreeGeneration\LineParser.cs" />
     <Compile Include="TreeGeneration\Parser.cs" />
     <Compile Include="TreeGeneration\Splitter.cs" />
     <Compile Include="Utility\StringUtils.cs" />
