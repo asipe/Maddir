@@ -60,6 +60,15 @@ d        directory 3".Trim();
       settings.OnDirectoryCreated += (sender, args) => File.WriteAllText(Path.Combine(args.Info.FullName, "file.txt"), "data");
       Maddirs.ApplyMarkup(settings, workingDir, markup);
 
+      //create a single directory with a single file with multiline comments
+      markup = @"
+d  multilinecontents
+f    file1.txt [
+  supports multi
+  line file contents
+]".Trim();
+      Maddirs.ApplyMarkup(new Settings(), workingDir, markup);
+
       //generate markup for out test directories using standard settings
       Console.WriteLine(Maddirs.BuildMarkup(new Settings(), workingDir));
 
