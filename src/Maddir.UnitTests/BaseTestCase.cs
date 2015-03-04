@@ -88,7 +88,7 @@ namespace Maddir.UnitTests {
 
     private static ComparisonResult DoCompare(object actual, object expected) {
       return _ObjectComparer
-        .Compare(actual, expected);
+        .Compare(expected, actual);
     }
 
     private void VerifyMocks() {

@@ -13,10 +13,10 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
         ContentEndDelimiter = ']';
       }
 
-      public char ContentEndDelimiter{get;private set;}
-      public char ContentStartDelimiter{get;private set;}
+      public char ContentEndDelimiter{get;set;}
+      public char ContentStartDelimiter{get;set;}
       public string Markup{get;private set;}
-      public IEntry[] Expected{get;set;}
+      public IEntry[] Expected{get;private set;}
 
       public Validation SetMarkup(params string[] lines) {
         Markup = StringUtils.ToNewLineSepString(lines);
@@ -48,6 +48,18 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
       yield return new TestCaseData(new Validation()
                                       .SetMarkup("f  file0.txt []")
                                       .SetExpected(new FileEntry(0, "file0.txt", "")));
+      yield return new TestCaseData(new Validation {
+                                                     ContentStartDelimiter = '<',
+                                                     ContentEndDelimiter = '>'
+                                                   }
+                                      .SetMarkup("f  file0.txt <>")
+                                      .SetExpected(new FileEntry(0, "file0.txt", "")));
+      yield return new TestCaseData(new Validation {
+                                                     ContentStartDelimiter = '|',
+                                                     ContentEndDelimiter = '|'
+                                                   }
+                                      .SetMarkup("f  file0.txt ||")
+                                      .SetExpected(new FileEntry(0, "file0.txt", "")));
       yield return new TestCaseData(new Validation()
                                       .SetMarkup("  f  file0.txt []   ")
                                       .SetExpected(new FileEntry(0, "file0.txt", "")));
@@ -56,6 +68,18 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
                                       .SetExpected(new FileEntry(0, "file0.txt", "0")));
       yield return new TestCaseData(new Validation()
                                       .SetMarkup("f    file0.txt  [a]")
+                                      .SetExpected(new FileEntry(1, "file0.txt", "a")));
+      yield return new TestCaseData(new Validation {
+                                                     ContentStartDelimiter = '<',
+                                                     ContentEndDelimiter = '>'
+                                                   }
+                                      .SetMarkup("f    file0.txt  <a>")
+                                      .SetExpected(new FileEntry(1, "file0.txt", "a")));
+      yield return new TestCaseData(new Validation {
+                                                     ContentStartDelimiter = '|',
+                                                     ContentEndDelimiter = '|'
+                                                   }
+                                      .SetMarkup("f    file0.txt  |a|")
                                       .SetExpected(new FileEntry(1, "file0.txt", "a")));
       yield return new TestCaseData(new Validation()
                                       .SetMarkup("f      file0.txt    [abc]")
@@ -107,7 +131,6 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
                                                  "d  dir0")
                                       .SetExpected(new FileEntry(0, "file0.txt", ""),
                                                    new DirectoryEntry(0, "dir0")));
-
       yield return new TestCaseData(new Validation()
                                       .SetMarkup("f  file0.txt []",
                                                  "d  dir0",
@@ -121,6 +144,50 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
                                                    new FileEntry(1, "file2.txt", "c2"),
                                                    new DirectoryEntry(1, "dir1"),
                                                    new DirectoryEntry(0, "dir2")));
+      yield return new TestCaseData(new Validation()
+                                      .SetMarkup("f  file0.txt [multiple",
+                                                 "line",
+                                                 "contents]")
+                                      .SetExpected(new FileEntry(0, "file0.txt", StringUtils.ToNewLineSepString("multiple", "line", "contents"))));
+      yield return new TestCaseData(new Validation {
+                                                     ContentStartDelimiter = '(',
+                                                     ContentEndDelimiter = ')'
+                                                   }
+                                      .SetMarkup("f  file0.txt (multiple",
+                                                 "line",
+                                                 "contents)")
+                                      .SetExpected(new FileEntry(0, "file0.txt", StringUtils.ToNewLineSepString("multiple", "line", "contents"))));
+      yield return new TestCaseData(new Validation()
+                                      .SetMarkup("f  file0.txt [",
+                                                 "multiple",
+                                                 "line",
+                                                 "contents",
+                                                 "]")
+                                      .SetExpected(new FileEntry(0, "file0.txt", StringUtils.ToNewLineSepString("", "multiple", "line", "contents", ""))));
+      yield return new TestCaseData(new Validation()
+                                      .SetMarkup("f  file0.txt [content0]",
+                                                 "f  file1.txt [content1a",
+                                                 "content1b]")
+                                      .SetExpected(new FileEntry(0, "file0.txt", "content0"),
+                                                   new FileEntry(0, "file1.txt", StringUtils.ToNewLineSepString("content1a", "content1b"))));
+      yield return new TestCaseData(new Validation()
+                                      .SetMarkup("f  file0.txt [content0]",
+                                                 "f  file1.txt [content1a",
+                                                 "content1b]",
+                                                 "d  dir0",
+                                                 "d    dir1",
+                                                 "f      file3.txt [content3a",
+                                                 "content3b",
+                                                 "content3c]",
+                                                 "d  dir2",
+                                                 "f  file3.txt []")
+                                      .SetExpected(new FileEntry(0, "file0.txt", "content0"),
+                                                   new FileEntry(0, "file1.txt", StringUtils.ToNewLineSepString("content1a", "content1b")),
+                                                   new DirectoryEntry(0, "dir0"),
+                                                   new DirectoryEntry(1, "dir1"),
+                                                   new FileEntry(2, "file3.txt", StringUtils.ToNewLineSepString("content3a", "content3b", "content3c")),
+                                                   new DirectoryEntry(0, "dir2"),
+                                                   new FileEntry(0, "file3.txt", "")));
     }
   }
 }
