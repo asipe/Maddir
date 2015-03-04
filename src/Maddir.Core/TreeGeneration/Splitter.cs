@@ -16,11 +16,27 @@ namespace Maddir.Core.TreeGeneration {
     public IEntry[] Split(string markup) {
       markup = markup.Trim();
 
-      return GetMatches(mFilePattern, markup)
+      var matches = GetMatches(mFilePattern, markup)
         .Concat(GetMatches(mDirPattern, markup))
         .OrderBy(match => match.Index)
+        .ToArray();
+
+      ValidateMatches(markup, matches);
+
+      return matches
         .Select(BuildEntry)
         .ToArray();
+    }
+
+    private static void ValidateMatches(string markup, IEnumerable<Match> matches) {
+      if (matches.Sum(match => Clean(match.Value).Length) != Clean(markup).Length)
+        throw new MaddirException("Cannot Parse Markup: '{0}'", markup);
+    }
+
+    private static string Clean(string value) {
+      return value
+        .Replace("\r", "")
+        .Replace("\n", "");
     }
 
     private static IEnumerable<Match> GetMatches(Regex regex, string markup) {

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Andy Sipe. All rights reserved. Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using System.Collections;
+using Maddir.Core;
 using Maddir.Core.Model;
 using Maddir.Core.TreeGeneration;
 using Maddir.Core.Utility;
@@ -38,6 +39,18 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
                                                  ContentEndDelimiter = validation.ContentEndDelimiter
                                                });
       Assert.That(splitter.Split(validation.Markup), Are.EqualTo(validation.Expected));
+    }
+
+    [TestCase("z  file1.txt []", "Cannot Parse Markup: 'z  file1.txt []'")]
+    [TestCase("f file1.txt []", "Cannot Parse Markup: 'f file1.txt []'")]
+    [TestCase("f   file1.txt []", "Cannot Parse Markup: 'f   file1.txt []'")]
+    [TestCase("f", "Cannot Parse Markup: 'f'")]
+    [TestCase("F  file1.txt []", "Cannot Parse Markup: 'F  file1.txt []'")]
+    [TestCase("f  file1.txt", "Cannot Parse Markup: 'f  file1.txt'")]
+    public void TestUnmatchedRegexThrowsMaddirException(string line, string expectedMessage) {
+      var splitter = new Splitter(new Settings());
+      var ex = Assert.Throws<MaddirException>(() => splitter.Split(line));
+      Assert.That(ex.Message, Is.EqualTo(expectedMessage));
     }
 
     public IEnumerable GetUsageTests() {
@@ -151,6 +164,11 @@ namespace Maddir.UnitTests.Core.TreeGeneration {
                                                  "line",
                                                  "contents]")
                                       .SetExpected(new FileEntry(0, "file0.txt", StringUtils.ToNewLineSepString("multiple", "line", "contents"))));
+      yield return new TestCaseData(new Validation()
+                                      .SetMarkup("f  file0.txt [multiple",
+                                                 "f",
+                                                 "d]")
+                                      .SetExpected(new FileEntry(0, "file0.txt", StringUtils.ToNewLineSepString("multiple", "f", "d"))));
       yield return new TestCaseData(new Validation {
                                                      ContentStartDelimiter = '(',
                                                      ContentEndDelimiter = ')'
