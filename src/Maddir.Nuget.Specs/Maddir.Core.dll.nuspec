@@ -5,7 +5,7 @@
     <version>1.0.0.0</version>
     <authors>asipe</authors>
     <owners>asipe</owners>
-    <licenseUrl>https://github.com/asipe/Maddir/blob/master/License.txt</licenseUrl>
+    <licenseUrl>https://github.com/asipe/Maddir/blob/master/LICENSE.txt</licenseUrl>
     <projectUrl>https://github.com/asipe/Maddir</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Maddir is a micro library which allows directory trees and files to be created using a simple markup syntax</description>
