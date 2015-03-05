@@ -12,7 +12,8 @@ var config = Require<FitterBuilder>().Build(new {
   PackagesDir = @"<thirdpartydir>\packages",
   NugetExePath = @"<thirdpartydir>\nuget\nuget.exe",
   NunitConsoleExePath = @"<thirdpartydir>\packages\common\Nunit.Runners\tools\nunit-console.exe",
-  IntegrationTestWorkingDir = @"<rootdir>\integrationtestworking"
+  IntegrationTestWorkingDir = @"<rootdir>\integrationtestworking",
+  NugetWorkingDir = @"<rootdir>\nugetworking"
 });
 
 void TryDelete(string dir) {
@@ -137,6 +138,30 @@ void InitITWorkingDir() {
     Directory.CreateDirectory(config["IntegrationTestWorkingDir"]);
 }
 
+void BuildNugetPackages() {
+  TryDelete(config["NugetWorkingDir"]);
+  
+  var dir = Path.Combine(config["NugetWorkingDir"], @"Maddir.Core\lib\net451");
+  Directory.CreateDirectory(dir);
+  File.Copy(Path.Combine(config["DebugDir"], @"net-4.5.1\Maddir.Core\Maddir.Core.dll"),
+            Path.Combine(dir, "Maddir.Core.dll")); 
+  File.Copy(Path.Combine(config["SourceDir"], @"Maddir.Nuget.Specs\Maddir.Core.dll.nuspec"),
+            Path.Combine(config["NugetWorkingDir"], @"Maddir.Core\Maddir.Core.dll.nuspec"));
+  RunSync(config["NugetExePath"], @"pack .\nugetworking\Maddir.Core\Maddir.Core.dll.nuspec -OutputDirectory .\nugetworking\Maddir.Core");
+}
+
+void PushNugetPackages() {
+  conzole.WriteLine("|dc|------------------------------------------|");
+  conzole.WriteLine("|y|Push Nuget Packages!!|");
+  conzole.WriteLine("|y|Are You Sure?|  Enter YES to Continue");
+  if (conzole.ReadLine() == "YES") {
+    RunSync(config["NugetExePath"], @"push .\nugetworking\Maddir.Core\Maddir.Core.1.0.0.0.nupkg");
+  }
+  else 
+    conzole.WriteLine("|r|Operation Cancelled...|");
+  conzole.WriteLine("|dc|------------------------------------------|");
+}
+
 void ProcessCommands() {
   var exiting = false;
 
@@ -191,6 +216,12 @@ void ProcessCommands() {
             Clean();
             BuildAll();
             RunAllTests();
+            break;
+          case ("build.nuget.packages"):
+            BuildNugetPackages();
+            break;
+          case ("push.nuget.packages"):
+            PushNugetPackages();
             break;
           default: 
             throw new Exception("Unknown Command: " + command);

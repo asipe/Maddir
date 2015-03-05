@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Maddir.Core</id>
+    <version>1.0.0.0</version>
+    <authors>asipe</authors>
+    <owners>asipe</owners>
+    <licenseUrl>https://github.com/asipe/Maddir/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/asipe/Maddir</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Maddir is a micro library which allows directory trees and files to be created using a simple markup syntax</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>file directory test integrationtest fixture</tags>
+    <dependencies>
+      <group targetFramework="net451">
+        <dependency id="SupaCharge.Core" version="[1.0.0.26]" />
+        <dependency id="Snarfz" version="[1.0.0.7]" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>
