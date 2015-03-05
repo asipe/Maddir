@@ -12,7 +12,7 @@ Maddir also allows markup to be created from a directory tree.  This feature was
 
 ### Usage
 ```csharp
-      //create a single directory with a single file
+//create a single directory with a single file
       var markup = @"
 d  single
 f    file1.txt [file1.txt contents]".Trim();
@@ -72,6 +72,23 @@ f    file1.txt [
   line file contents
 ]".Trim();
       Maddirs.ApplyMarkup(new Settings(), workingDir, markup);
+
+      //generate a layout and reuse/apply it to multiple locations
+      markup = @"
+d  cloned
+d    clonedsub
+f      file1.txt []".Trim();
+      var layout = new Parser(new Settings()).Parse(markup);
+      var cloned1 = Path.Combine(workingDir, "cloned1");
+      var cloned2 = Path.Combine(workingDir, "cloned2");
+      var cloned3 = Path.Combine(workingDir, "cloned3");
+      Directory.CreateDirectory(cloned1);
+      Directory.CreateDirectory(cloned2);
+      Directory.CreateDirectory(cloned3);
+      var engine = new Engine(new DotNetDirectory(), new DotNetFile());
+      engine.Apply(new Settings(), cloned1, layout);
+      engine.Apply(new Settings(), cloned2, layout);
+      engine.Apply(new Settings(), cloned3, layout);
 
       //generate markup for out test directories using standard settings
       Console.WriteLine(Maddirs.BuildMarkup(new Settings(), workingDir));

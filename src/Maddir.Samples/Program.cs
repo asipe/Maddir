@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using Maddir.Core;
 using Maddir.Core.Model;
+using Maddir.Core.TreeGeneration;
 using SupaCharge.Core.IOAbstractions;
 
 namespace Maddir.Samples {
@@ -91,6 +92,23 @@ f    file1.txt [
   line file contents
 ]".Trim();
       Maddirs.ApplyMarkup(new Settings(), workingDir, markup);
+
+      //generate a layout and reuse/apply it to multiple locations
+      markup = @"
+d  cloned
+d    clonedsub
+f      file1.txt []".Trim();
+      var layout = new Parser(new Settings()).Parse(markup);
+      var cloned1 = Path.Combine(workingDir, "cloned1");
+      var cloned2 = Path.Combine(workingDir, "cloned2");
+      var cloned3 = Path.Combine(workingDir, "cloned3");
+      Directory.CreateDirectory(cloned1);
+      Directory.CreateDirectory(cloned2);
+      Directory.CreateDirectory(cloned3);
+      var engine = new Engine(new DotNetDirectory(), new DotNetFile());
+      engine.Apply(new Settings(), cloned1, layout);
+      engine.Apply(new Settings(), cloned2, layout);
+      engine.Apply(new Settings(), cloned3, layout);
 
       //generate markup for out test directories using standard settings
       Console.WriteLine(Maddirs.BuildMarkup(new Settings(), workingDir));
