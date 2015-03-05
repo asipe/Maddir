@@ -90,7 +90,9 @@ f    file1.txt [
 
 ### Nuget
 
-coming soon
+nuget package (Maddir.Core): http://www.nuget.org/packages/Maddir.Core/
+
+install via package manager:  Install-Package Maddir.Core
 
 ### License
 
