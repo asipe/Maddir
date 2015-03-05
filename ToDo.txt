@@ -7,7 +7,6 @@ Snarfzer
   * update copy right date
   
 Before release:
-  * multiline file contents
   * move samples down a level and into own solution 
   * nuget specs 
  
