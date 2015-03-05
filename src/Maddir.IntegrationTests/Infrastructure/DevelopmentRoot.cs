@@ -27,7 +27,7 @@ namespace Maddir.IntegrationTests.Infrastructure {
       yield return () => Directory.Exists(Path.Combine(dir, "thirdparty"));
       yield return () => Directory.Exists(Path.Combine(dir, "src"));
       yield return () => File.Exists(Path.Combine(dir, "start.minion.ps1"));
-      yield return () => File.Exists(Path.Combine(dir, "LICENSE"));
+      yield return () => File.Exists(Path.Combine(dir, "LICENSE.txt"));
     }
   }
 }

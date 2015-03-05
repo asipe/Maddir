@@ -155,7 +155,7 @@ void PushNugetPackages() {
   conzole.WriteLine("|y|Push Nuget Packages!!|");
   conzole.WriteLine("|y|Are You Sure?|  Enter YES to Continue");
   if (conzole.ReadLine() == "YES") {
-    RunSync(config["NugetExePath"], @"push .\nugetworking\Maddir.Core\Maddir.Core.1.0.0.0.nupkg");
+    RunSync(config["NugetExePath"], @"push .\nugetworking\Maddir.Core\Maddir.Core.1.0.0.1.nupkg");
   }
   else 
     conzole.WriteLine("|r|Operation Cancelled...|");
