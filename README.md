@@ -8,7 +8,7 @@ Micro library for generating directory trees and files.  It was initially create
 
 Maddir allows the developer to create markup which represents the desired directory tree structure and then apply the markup to a specific location on the file system.   Callbacks are available to customize all aspects of directory and file creation.
 
-Maddir also allows markup to be created from a directory tree.  This feature was developed to help with the creation of maddir and only provides basic support for reading file contents (does not support binary files or multi line files).
+Maddir also allows markup to be created from a directory tree.  This feature was developed to help with the creation of maddir and only provides basic support for reading file contents (does not support binary files very well, etc...).
 
 ### Usage
 ```csharp
