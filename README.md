@@ -1,6 +1,6 @@
 # Maddir
 
-Micro library for generating directory trees and files.  It was created to support automated tests which sometimes require a directory tree created in a specific manner to exercise the system under test. 
+Micro library for generating directory trees and files.  It was initially created to support automated tests which sometimes require a directory tree created in a specific manner to exercise the system under test. 
 
 Maddir allows the developer to create markup which represents the desired directory tree structure and then apply the markup to a specific location on the file system.   Callbacks are available to customize all aspects of directory and file creation.
 
