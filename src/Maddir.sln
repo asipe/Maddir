@@ -20,8 +20,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "License", "License", "{D045
 		..\License.txt = ..\License.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maddir.Samples", "Maddir.Samples\Maddir.Samples.csproj", "{EEFC8930-7F06-4C47-92FA-0EC745A3D85F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReadMe", "ReadMe", "{B0C99CCA-E983-4059-81CB-4D61E8DE4DDE}"
 	ProjectSection(SolutionItems) = preProject
 		..\README.md = ..\README.md
@@ -45,10 +43,6 @@ Global
 		{94F7E9BC-0763-4ACF-8A1D-087913CF7E66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94F7E9BC-0763-4ACF-8A1D-087913CF7E66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94F7E9BC-0763-4ACF-8A1D-087913CF7E66}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EEFC8930-7F06-4C47-92FA-0EC745A3D85F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EEFC8930-7F06-4C47-92FA-0EC745A3D85F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EEFC8930-7F06-4C47-92FA-0EC745A3D85F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EEFC8930-7F06-4C47-92FA-0EC745A3D85F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

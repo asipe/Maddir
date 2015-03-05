@@ -9,3 +9,4 @@ test_results
 thirdparty/packages
 nugetworking
 src/Maddir.Minion/packages
+src/Maddir.Samples/packages
